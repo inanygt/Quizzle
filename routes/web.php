@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Controllers
+use App\Http\Controllers\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,5 +34,12 @@ Route::middleware('auth')->group(function () {
 Route::get('/quiz', function() {
     return view('quiz');
 })->name('fuzzle');
+
+// Route::get('/discover', function() {
+//     return view('components/discover');
+// })->name('discover');
+
+Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
+
 
 require __DIR__.'/auth.php';
