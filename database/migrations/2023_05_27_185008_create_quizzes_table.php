@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->integer('category_id');
+            $table->foreignId('category_id');
             $table->timestamps();
         });
     }
