@@ -42,4 +42,11 @@ Route::get('/quiz', function() {
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 
 
+// jorianAPItest
+Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
+Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
+Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
+Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
+
+
 require __DIR__.'/auth.php';
