@@ -6,6 +6,9 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Services\OpenAIService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class QuizController extends Controller
 {
@@ -21,26 +24,42 @@ class QuizController extends Controller
         // Validation
         $request->validate([
             'subject' => 'required|string|max:255',
+            'num_questions' => 'required|integer|min:1',
+            'time_per_question' => 'required|integer|min:1',
+            'language' => 'required|string|in:en,es', // add other languages here
         ]);
 
+        Log::info('startQuiz method was hit with request data', ['request_data' => $request->all()]);
+
         // Create a new Quiz with the given subject
-        $quiz = Quiz::create(['subject' => $request->subject]);
+        $quiz = Quiz::create([
+            'subject' => $request->subject,
+            'num_questions' => $request->num_questions,
+            'time_per_question' => $request->time_per_question,
+            'language' => $request->language
+        ]);
 
-        // Generate 15 questions and save them to the database
-        for ($i = 0; $i < 15; $i++) {
-            $generatedQuestion = $this->openAIService->generateQuestion($request->subject);
+        Log::info('Quiz created', ['quiz' => $quiz]);
 
-            // Note: Here you will need to parse the generatedQuestion to get the question and answer.
-            // This will depend on how the OpenAI API formats its response.
-            // This is just an example.
-            $questionText = $generatedQuestion['question'];
-            $answer = $generatedQuestion['answer'];
+        // Generate questions and save them to the database
+        for ($i = 0; $i < $request->num_questions; $i++) {
+            try {
+                $generatedQuestion = $this->openAIService->generateQuestion($request->subject);
 
-            Question::create([
-                'quiz_id' => $quiz->id,
-                'question' => $questionText,
-                'answer' => $answer
-            ]);
+                Log::info('Generated question', ['generatedQuestion' => $generatedQuestion]);
+
+                $question = Question::create([
+                    'quiz_id' => $quiz->id,
+                    'question' => $generatedQuestion['question'],
+                    'choices' => json_encode($generatedQuestion['choices']),
+                    'correct_answer' => $generatedQuestion['correct_answer']
+                ]);
+
+                Log::info('Question created', ['question' => $question]);
+            } catch (\Exception $e) {
+                Log::error('Failed to generate question', ['error' => $e->getMessage()]);
+                return redirect()->back()->withErrors(['error' => 'Failed to generate question']);
+            }
         }
 
         // Redirect to the first question
@@ -50,9 +69,7 @@ class QuizController extends Controller
     public function showQuestion(Quiz $quiz, $questionNumber)
     {
         $question = $quiz->questions()->skip($questionNumber - 1)->first();
-
-        // Render the question view
-        return view('question', ['question' => $question]);
+        return view('question', ['quiz' => $quiz, 'questionNumber' => $questionNumber, 'question' => $question]);
     }
 
     public function submitAnswer(Quiz $quiz, $questionNumber, Request $request)
@@ -66,7 +83,7 @@ class QuizController extends Controller
         $question = $quiz->questions()->skip($questionNumber - 1)->first();
 
         // Check the submitted answer against the correct answer
-        if ($request->answer === $question->answer) {
+        if ($request->answer == $question->correct_answer) {
             // The answer is correct
 
             // Retrieve the current score from the session, or 0 if no score has been recorded yet
@@ -82,7 +99,7 @@ class QuizController extends Controller
         // Determine the next question number
         $nextQuestionNumber = $questionNumber + 1;
 
-        if ($nextQuestionNumber > $quiz->questions->count()) {
+        if ($nextQuestionNumber > $quiz->num_questions) {
             // The quiz is over
 
             // Retrieve the final score from the session
@@ -105,5 +122,4 @@ class QuizController extends Controller
     {
         return view('result', ['score' => $score]);
     }
-
 }

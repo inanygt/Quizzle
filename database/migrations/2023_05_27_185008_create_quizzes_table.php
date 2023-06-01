@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateQuizzesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('category_id');
+            $table->string('subject');
+            $table->integer('num_questions');
+            $table->integer('time_per_question');
+            $table->string('language');
             $table->timestamps();
         });
     }
@@ -30,4 +32,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('quizzes');
     }
-};
+}

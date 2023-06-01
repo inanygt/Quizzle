@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('quiz_id')->constrained();
             $table->string('question');
-            $table->string('answer');
+            $table->string('correct_answer');
             $table->timestamps();
+            $table->json('choices');
+
         });
     }
 

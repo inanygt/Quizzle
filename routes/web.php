@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // Controllers
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,10 +44,15 @@ Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 
 
 // jorianAPItest
+Route::get('/quiz/start', function () {
+    return view('start');
+});
 Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
 Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
 Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
 Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
+
+
 
 
 require __DIR__.'/auth.php';
