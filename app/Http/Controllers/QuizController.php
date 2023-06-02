@@ -124,4 +124,25 @@ class QuizController extends Controller
     {
         return view('result', ['score' => $score]);
     }
+
+    public function showJoinPage()
+    {
+        return view('join');
+    }
+
+    public function joinQuiz(Request $request)
+    {
+        // Here you should validate the input and find the quiz with this ID or code
+        // Then, add the user to this quiz in the database
+
+        // For example:
+        $quiz = Quiz::findOrFail($request->input('quiz_id'));
+
+        // Note: This assumes you have a pivot table for quizzes and users.
+        // You need to adjust this according to your specific application structure.
+        $quiz->users()->attach(Auth::id());
+
+        return redirect()->route('quiz.show', ['id' => $quiz->id]);
+    }
+
 }

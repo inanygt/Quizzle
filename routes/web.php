@@ -54,6 +54,9 @@ Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->
 
 Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
 
+//Jorian joinQuiz
+Route::get('/join', [QuizController::class, 'showJoinPage']);
+Route::post('/join', [QuizController::class, 'joinQuiz']);
 
 
 require __DIR__.'/auth.php';
