@@ -55,11 +55,14 @@ Route::get('/geography', function() {
 })->name('geography');
 
 Route::get('/music', function() {
-    return view('categories/music');
+    $quizzes = Quiz::where('category_id', 2)->get();
+    return view('categories/music', compact('quizzes'));
 })->name('music');
 
 Route::get('/math', function() {
-    return view('categories/math');
+    $quizzes = Quiz::where('category_id', 3)->get();
+
+    return view('categories/math', compact('quizzes'));
 })->name('math');
 
 require __DIR__.'/auth.php';

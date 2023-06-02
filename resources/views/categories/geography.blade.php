@@ -3,7 +3,7 @@
    <div class="container">
         <div class="row">
             <div class="col">
-                <h1 class="pt-5">Discover our collection of Quizzles!</h1>
+                <h1 class="pt-5">Geography</h1>
                     {{-- Cards --}}
                     <div class="row">
                         @foreach ($quizzes as $quiz)
