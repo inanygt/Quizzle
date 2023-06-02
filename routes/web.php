@@ -45,7 +45,19 @@ Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 Route::get('/testquiz', function (){
 $quiz = App\Models\Category::with('quiz')->get();
 dd($quiz);
-
 });
+
+// Categories
+Route::get('/geography', function() {
+    return view('geography');
+})->name('geography');
+
+Route::get('/music', function() {
+    return view('music');
+})->name('music');
+
+Route::get('/math', function() {
+    return view('math');
+})->name('math');
 
 require __DIR__.'/auth.php';
