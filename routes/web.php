@@ -18,8 +18,8 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return view('home');
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -49,15 +49,15 @@ dd($quiz);
 
 // Categories
 Route::get('/geography', function() {
-    return view('geography');
+    return view('categories/geography');
 })->name('geography');
 
 Route::get('/music', function() {
-    return view('music');
+    return view('categories/music');
 })->name('music');
 
 Route::get('/math', function() {
-    return view('math');
+    return view('categories/math');
 })->name('math');
 
 require __DIR__.'/auth.php';
