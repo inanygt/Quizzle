@@ -12,6 +12,6 @@ class Quiz extends Model
     use HasFactory;
 
     public function category() {
-        return $this->hasMany(Category::class, 'id');
+        return $this->hasMany(Category::class);
     }
 }
