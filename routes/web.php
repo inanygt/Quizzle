@@ -42,4 +42,10 @@ Route::get('/quiz', function() {
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 
 
+Route::get('/testquiz', function (){
+$quiz = App\Models\Category::with('quiz')->get();
+dd($quiz);
+
+});
+
 require __DIR__.'/auth.php';
