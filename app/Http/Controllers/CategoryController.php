@@ -19,7 +19,7 @@ class CategoryController extends Controller
         $quiz = Quiz::find(1);
 
 
-        dd($quiz->category);
+        // dd($quiz->category);
 
         return view('components/discover', compact('categories'));
 
