@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Models
+use App\Models\Category;
+use App\Models\Quiz;
+
 // Controllers
 use App\Http\Controllers\CategoryController;
 
@@ -42,14 +46,12 @@ Route::get('/quiz', function() {
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 
 
-Route::get('/testquiz', function (){
-$quiz = App\Models\Category::with('quiz')->get();
-dd($quiz);
-});
-
 // Categories
 Route::get('/geography', function() {
-    return view('categories/geography');
+    // Get all quizzes with category from relation
+    $quizzes = Quiz::where('category_id', 1)->get();
+
+    return view('categories/geography', compact('quizzes'));
 })->name('geography');
 
 Route::get('/music', function() {
