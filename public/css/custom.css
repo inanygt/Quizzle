@@ -22,9 +22,16 @@ body {
     flex-direction: column;
 }
 
-.answer-option {
-    margin-bottom: 10px;
+.answer-option input[type="radio"] {
+    vertical-align: middle;
+    margin-top: -2px;
 }
+
+.answer-option label {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 
 button {
     margin-top: 20px;
@@ -61,6 +68,3 @@ form button {
 form button:hover {
     background-color: #0056b3;
 }
-
-
-

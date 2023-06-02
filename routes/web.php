@@ -52,6 +52,7 @@ Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'sh
 Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
 Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
 
+Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
 
 
 

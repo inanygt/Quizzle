@@ -11,22 +11,43 @@
 
 
     <div class="container">
-        <div class="question">
-            <p>{{ $question->question }}</p>
-        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Quiz') }}</div>
 
-        <form method="POST" action="/quiz/{{ $quiz->id }}/question/{{ $questionNumber }}" class="answer-form">
-            @csrf
-            @foreach(json_decode($question->choices) as $index => $choice)
-                <div class="answer-option">
-                    <input type="radio" id="answer_{{ $index }}" name="answer" value="{{ $index }}">
-                    <label for="answer_{{ $index }}">{{ $choice }}</label>
+                    <div class="card-body">
+                        <h3>{{ $question->question }}</h3>  <!-- Displaying the question outside the form -->
+
+                        <form method="POST" action="{{ route('quiz.submitAnswer', ['quiz' => $quiz->id, 'questionNumber' => $questionNumber]) }}">
+                            @csrf
+
+                            <div class="form-group">
+                                @foreach(json_decode($question->choices) as $index => $choice)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="answer" id="answer{{ $index }}" value="{{ $index }}">
+                                        <label class="form-check-label" for="answer{{ $index }}">
+                                            {{ $choice }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Submit Answer') }}
+                                </button>
+                            </div>
+
+                            <!-- Displaying correct answer for testing -->
+                            <div>Correct Answer: {{ $question->correct_answer }}</div>
+                        </form>
+                    </div>
                 </div>
-            @endforeach
-
-            <button type="submit">Submit Answer</button>
-        </form>
+            </div>
+        </div>
     </div>
+
 
 
 </body>

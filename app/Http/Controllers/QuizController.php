@@ -76,14 +76,15 @@ class QuizController extends Controller
     {
         // Validate the submitted answer
         $request->validate([
-            'answer' => 'required|string',
+            'answer' => 'required|integer',
         ]);
 
         // Retrieve the question
         $question = $quiz->questions()->skip($questionNumber - 1)->first();
 
         // Check the submitted answer against the correct answer
-        if ($request->answer == $question->correct_answer) {
+        $chosenAnswer = json_decode($question->choices, true)[$request->answer];
+        if ($chosenAnswer == $question->correct_answer) {
             // The answer is correct
 
             // Retrieve the current score from the session, or 0 if no score has been recorded yet
@@ -117,6 +118,7 @@ class QuizController extends Controller
             return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => $nextQuestionNumber]);
         }
     }
+
 
     public function results(Quiz $quiz, $score)
     {

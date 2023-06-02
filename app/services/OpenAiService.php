@@ -26,8 +26,10 @@ class OpenAIService
                 'Content-Type' => 'application/json'
             ],
             'json' => [
-                'prompt' => "Generate a multiple-choice question about {$subject}",
-                'max_tokens' => 200
+                'prompt' => "You are KahootGPT. At the end of this prompt, I am going to give you a subject. From this subject, generate a multiple-choice question with exactly 4 answer options, but only 1 is correct. Indicate the correct answer by preceding it with a '*'. Never more or less than 4! The subject is : {$subject}",
+
+
+                'max_tokens' => 1000
             ]
         ]);
 
@@ -51,23 +53,38 @@ class OpenAIService
         $lines = explode("\n", $text);
 
         // The first line is the question
-        $question = trim($lines[0]);  // assuming the question is always the first line
+        $question = trim($lines[0]);
 
         // The next lines are the choices, and we filter out any empty strings in case of blank lines
-        $choices = array_filter(array_slice($lines, 1, -1));  // assuming the choices are lines from the second to the second last
+        $choices = array_slice($lines, 1);
 
-        // The last line is the correct answer
-        $correctAnswer = trim(end($lines));  // assuming the correct answer is always the last line
+        // Here we look for the '*' to find the correct answer
+        $correctAnswer = "";
+        foreach ($choices as $i => $choice) {
+            if (substr($choice, 0, 1) === "*") {
+                $correctAnswer = substr($choice, 1);  // remove the '*'
+                $choices[$i] = $correctAnswer;  // remove the '*' from the choice in the list
+                break;
+            }
+        }
+
+        // Here we ensure there are exactly 4 choices
+        while (count($choices) < 4) {
+            array_push($choices, "Dummy answer");
+        }
 
         $parsedQuestion = [
             'question' => $question,
-            'choices' => $choices,
+            'choices' => array_values($choices),  // reindex the array
             'correct_answer' => $correctAnswer
         ];
 
         return $parsedQuestion;
     }
 
+
+
+}
 
     // public function parseResponse($responseArray)
     // {
@@ -123,4 +140,4 @@ class OpenAIService
     //     return $parsedQuestion;
     // }
 
-}
+//}
