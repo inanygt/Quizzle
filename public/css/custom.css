@@ -1,0 +1,70 @@
+/* custom.css */
+
+body {
+    background-color: lightgray
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.question {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.answer-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-option input[type="radio"] {
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+.answer-option label {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+button {
+    margin-top: 20px;
+}
+
+
+form {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 0.5em;
+
+    width: 100%;
+    max-width: 600px; /* This limits the width of the form to 600px */
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border-radius: 0.25em;
+    border: 1px solid #ddd;
+}
+
+form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}

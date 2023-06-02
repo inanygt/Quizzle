@@ -7,11 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 
 
+// class Quiz extends Model
+// {
+//     use HasFactory;
+
+//     public function category() {
+//         return $this->hasMany(Category::class, 'id');
+//     }
+// }
+
+
+//jorian
 class Quiz extends Model
 {
     use HasFactory;
 
-    public function category() {
-        return $this->hasMany(Category::class);
+
+    protected $fillable = ['subject', 'num_questions', 'time_per_question', 'language'];
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
     }
 }
