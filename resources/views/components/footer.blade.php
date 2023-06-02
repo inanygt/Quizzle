@@ -1,8 +1,4 @@
-<div class="footer">
-    <h1>footer</h1>
-</div>
-
-{{-- <div class="container">
+<div class="container">
   <footer class="py-5">
     <div class="row">
       <div class="col-6 col-md-2 mb-3">
@@ -51,7 +47,4 @@
       </div>
     </div>
   </footer>
-</div> --}}
-
-
-
+</div>
