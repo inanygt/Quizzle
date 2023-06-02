@@ -10,6 +10,7 @@ use App\Models\Quiz;
 // Controllers
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuizzleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/quiz', function() {
-    return view('quiz');
-})->name('fuzzle');
+Route::get('/quizzle', function() {
+    return view('quizzle');
+})->name('quizzle');
+
+Route::post('/quizzle', [QuizzleController::class, 'form']);
+
+
 
 // Route::get('/discover', function() {
 //     return view('components/discover');

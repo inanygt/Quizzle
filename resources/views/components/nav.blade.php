@@ -33,7 +33,7 @@
           <a class="nav-link" href="{{route('register')}}">Register</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="{{route('fuzzle')}}">Quizzle!</a>
+          <a class="nav-link" href="{{route('quizzle')}}">Quizzle!</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
