@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-md-6 mx-auto">
             <h1>Make you own quizzle!</h1>
 
 
@@ -19,28 +19,67 @@
                 {{$errorMessage}}
             </div>
             @endif
+            {{-- Form --}}
+            <form action="/quizzle" method="POST">
+                @csrf
+                <div class="mb-3">
+                <select class="form-select" aria-label="Default select example" name="category_id" >>
+                    {{-- Categories --}}
+                    <option selected>Choose a category</option>
+                    @foreach ($categories as $category)
+                    <option value="1"> {{$category->name}} </option>
+                    @endforeach
+                </select>
+                </div>
+                <div class="mb-3">
 
-    <form action="/quizzle" method="POST">
-        @csrf
-        <select class="form-select" aria-label="Default select example" name="category_id" >>
-        {{-- For each all categories --}}
-            <option selected>Choose a category</option>
-            @foreach ($categories as $category)
-            <option value="1"> {{$category->name}} </option>
-            @endforeach
-        </select>
-        <label for="exampleInputEmail1" class="form-label">Choose the name of the quizz</label>
-        <input type="text"  class="form-control"name="name">
-        <input type="submit" class="form-control" value="Send">
-        {{-- Test --}}
-        <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-    </form>
+                    <input type="text" placeholder="Name your fuzzle"  class="form-control"name="name">
+                </div>
+                 <div class="mb-3">
+                    <input type="text" placeholder="Subject of your fuzzle"  class="form-control"name="subject">
+                </div>
+                {{-- Add --}}
+                <button type="button" id="add" class="btn btn-primary my-3">Add a Question</button>
+                {{--   Questions --}}
+                <div id="myDiv"></div>
+                {{-- Submit  --}}
+                <input type="submit" class="form-control my-3" value="confirm">
+
+            </form>
 
         </div>
     </div>
 </div>
+{{-- Javascript --}}
+<script>
+    let btn = document.getElementById('add');
+    let container = document.getElementById('myDiv');
+
+    btn.addEventListener("click", function() {
+    // Create a new div element
+    let newDiv = document.createElement("div");
+
+    // Create an input field for the question
+    let questionInput = document.createElement("input");
+    questionInput.type = "text";
+    questionInput.placeholder = "Your question";
+    questionInput.classList.add("form-control");
+    questionInput.classList.add("my-3");
+    newDiv.appendChild(questionInput);
+
+    // Create input fields for answers
+    for (let i = 1; i <= 4; i++) {
+        let answerInput = document.createElement("input");
+        answerInput.type = "text";
+        answerInput.classList.add("form-control");
+        answerInput.placeholder = "Answer " + i;
+        newDiv.appendChild(answerInput);
+    }
+
+    // Append the new div element to the container
+    container.appendChild(newDiv);
+});
+
+
+</script>
 @endsection
