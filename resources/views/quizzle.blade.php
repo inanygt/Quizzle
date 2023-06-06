@@ -39,7 +39,7 @@
                 </div>
                 {{-- Add --}}
                 <div id="container"></div>
-                <button type="button" id="add" class="btn btn-primary my-3">Add a Question</button>
+                <button type="button" id="add" class="btn btn-primary my-3">Add Question</button>
                 <input type="submit" class="form-control my-3" value="confirm">
                 {{-- Submit  --}}
 
@@ -95,10 +95,25 @@
     answerInput.placeholder = "correct answer";
     answerInput.classList.add("form-control", 'my-3', "text-success");
 
+     // Create a delete button
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete Question";
+            deleteBtn.classList.add("btn", "btn-danger");
+            deleteBtn.addEventListener("click", function() {
+                container.removeChild(questionHeading);
+                container.removeChild(newDiv);
+                container.removeChild(answerInput);
+                container.removeChild(deleteBtn);
+                questionCounter--;
+                btn.disabled = false;
+            });
+
     // Append the new div element to the container
     container.appendChild(questionHeading);
     container.appendChild(newDiv);
     container.appendChild(answerInput);
+    container.appendChild(deleteBtn);
+
 
      if (questionCounter +1 > maxQuestions) {
             // Disable the button or perform any necessary action

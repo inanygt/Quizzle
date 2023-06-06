@@ -22,7 +22,8 @@ class QuizzleController extends Controller
 
         $validation = $request->validate([
              'name' => 'required',
-             'category_id' => 'required'
+             'category_id' => 'required',
+             'subject' => 'required',
         ]);
 
         try {
