@@ -19,7 +19,7 @@ class QuizzleController extends Controller
     }
 
     public function form(Request $request) {
-        dd($request);
+        // dd($request);
         $categories = Category::all();
 
 
@@ -31,9 +31,19 @@ class QuizzleController extends Controller
 
         ]);
         try {
-            $name = $request->name;
+        $categories = Category::all();
 
-            $quiz = Quiz::create($validation);
+        $name = $request->name;
+        $quiz = Quiz::create($validation);
+
+        $questionQuiz = $request->questions;
+        // dd($questionQuiz);
+
+         // Associate the child model with the parent model
+        foreach ($questionQuiz as $questionQuiz) {
+        $question = new Question(['question' => $questionQuiz]);
+        $quiz->questions()->save($question);
+    }
 
         } catch (QueryException $e) {
         $errorCode = $e->errorInfo[1];
@@ -46,6 +56,7 @@ class QuizzleController extends Controller
         $errorMessage = 'An error occurred.';
         return view('/quizzle', ['errorMessage' => $errorMessage]);
     }
+
 
     // return view('quizzle', ['name' => $request->name]);
     return view('quizzle', compact('categories', 'name'));
