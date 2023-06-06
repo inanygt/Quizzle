@@ -41,8 +41,7 @@
                 <div id="container"></div>
                 <button type="button" id="add" class="btn btn-primary my-3">Add Question</button>
                 <input type="submit" class="form-control my-3" value="confirm">
-                {{-- Submit  --}}
-
+                <input type="hidden" name="approved" value="0">
             </form>
 
         </div>

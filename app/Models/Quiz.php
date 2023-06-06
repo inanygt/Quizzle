@@ -23,7 +23,7 @@ class Quiz extends Model
     use HasFactory;
 
 
-    protected $fillable = ['name', 'category_id', 'subject', 'num_questions', 'time_per_question', 'language'];
+    protected $fillable = ['name', 'approved', 'category_id', 'subject', 'num_questions', 'time_per_question', 'language'];
 
     public function questions()
     {

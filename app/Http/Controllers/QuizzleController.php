@@ -18,16 +18,18 @@ class QuizzleController extends Controller
 
     public function form(Request $request) {
         // dd($request);
+        $categories = Category::all();
 
 
         $validation = $request->validate([
              'name' => 'required',
              'category_id' => 'required',
              'subject' => 'required',
-        ]);
+             'approved' => 'required'
 
+        ]);
         try {
-        $quiz = Quiz::create($validation);
+            $quiz = Quiz::create($validation);
 
         } catch (QueryException $e) {
         $errorCode = $e->errorInfo[1];
@@ -41,6 +43,8 @@ class QuizzleController extends Controller
         return view('/quizzle', ['errorMessage' => $errorMessage]);
     }
 
-    return view('quizzle', ['name' => $request->name]);
+    // return view('quizzle', ['name' => $request->name]);
+    return view('quizzle', compact('categories'));
     }
 }
+
