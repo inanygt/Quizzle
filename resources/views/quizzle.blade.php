@@ -42,6 +42,7 @@
                 <button type="button" id="add" class="btn btn-primary my-3">Add a Question</button>
                 {{--   Questions --}}
                 <div id="myDiv"></div>
+                <div id="answer"></div>
                 {{-- Submit  --}}
                 <input type="submit" class="form-control my-3" value="confirm">
 
@@ -54,10 +55,18 @@
 <script>
     let btn = document.getElementById('add');
     let container = document.getElementById('myDiv');
+    let answer = document.getElementById('answer');
 
     btn.addEventListener("click", function() {
     // Create a new div element
     let newDiv = document.createElement("div");
+
+    let answerInput = document.createElement("input");
+    answerInput.type="text";
+    answerInput.placeholder = "correct answer";
+    answerInput.classList.add("form-control");
+    answerInput.classList.add("my-3");
+    answer.appendChild(answerInput);
 
     // Create an input field for the question
     let questionInput = document.createElement("input");
@@ -67,8 +76,12 @@
     questionInput.classList.add("my-3");
     newDiv.appendChild(questionInput);
 
+
+
+
+
     // Create input fields for answers
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 3; i++) {
         let answerInput = document.createElement("input");
         answerInput.type = "text";
         answerInput.classList.add("form-control");
