@@ -38,10 +38,10 @@
                     <input type="text" placeholder="Subject of your fuzzle"  class="form-control"name="subject">
                 </div>
                 {{-- Add --}}
-                <button type="button" id="add" class="btn btn-primary my-3">Add a Question</button>
                 <div id="container"></div>
-                {{-- Submit  --}}
+                <button type="button" id="add" class="btn btn-primary my-3">Add a Question</button>
                 <input type="submit" class="form-control my-3" value="confirm">
+                {{-- Submit  --}}
 
             </form>
 
@@ -55,49 +55,65 @@
     let answer = document.getElementById('answer');
     let hquest = document.getElementById('hquest');
     let questionCounter = 0; // Counter to keep track of the question number
+    const maxQuestions = 5; // Maximum number of questions
+
 
     // EVENTLISTENER
     btn.addEventListener("click", function() {
+    if (questionCounter <= maxQuestions) {
     // Create a new div element
     let newDiv = document.createElement("div");
-
-    let answerInput = document.createElement("input");
-    answerInput.type="text";
-    answerInput.placeholder = "correct answer";
-    answerInput.classList.add("form-control");
-    answerInput.classList.add("my-3");
 
     // Create an input field for the question
     let questionInput = document.createElement("input");
     questionInput.type = "text";
     questionInput.placeholder = "Your question";
-    questionInput.classList.add("form-control");
-    questionInput.classList.add("my-3");
+    questionInput.classList.add("form-control", "my-3");
+    questionInput.style.fontWeight = "bold";
+
     newDiv.appendChild(questionInput);
 
        // Increment the question counter
     questionCounter++;
 
+     // Create a heading element for the question
+    let questionHeading = document.createElement("h3");
+    questionHeading.textContent = "Question " + questionCounter;
+    questionHeading.classList.add('mt-5');
+
     // Create input fields for answers
     for (let i = 1; i <= 3; i++) {
         let answerInput = document.createElement("input");
         answerInput.type = "text";
-        answerInput.classList.add("form-control");
+        answerInput.classList.add("form-control", "text-danger");
         answerInput.placeholder = "Answer " + i;
         newDiv.appendChild(answerInput);
     }
 
-     // Create a heading element for the question
-    let questionHeading = document.createElement("h3");
-    questionHeading.textContent = "Question " + questionCounter;
+    let answerInput = document.createElement("input");
+    answerInput.type="text";
+    answerInput.placeholder = "correct answer";
+    answerInput.classList.add("form-control", 'my-3', "text-success");
 
     // Append the new div element to the container
     container.appendChild(questionHeading);
     container.appendChild(newDiv);
     container.appendChild(answerInput);
 
+     if (questionCounter +1 > maxQuestions) {
+            // Disable the button or perform any necessary action
+            let maxReachedText = document.createElement("p");
+            maxReachedText.textContent = "Maximum number of questions reached.";
+            maxReachedText.classList.add("alert", "alert-warning");
+            maxReachedText.setAttribute("role", "alert");
+            container.appendChild(maxReachedText);
+            btn.disabled = true;
+        }
+}
+
 });
 
 
 </script>
 @endsection
+
