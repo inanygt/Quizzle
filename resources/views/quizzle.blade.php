@@ -1,9 +1,9 @@
 @extends('masters')
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-md-6 mx-auto">
-            <h1>Make you own quizzle!</h1>
+            <h1 class="mb-4">Make you own quizzle!</h1>
 
 
             @if (@isset($name))
