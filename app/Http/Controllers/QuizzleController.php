@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+// Models
 use App\Models\Quiz;
+use App\Models\Question;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -17,7 +19,7 @@ class QuizzleController extends Controller
     }
 
     public function form(Request $request) {
-        // dd($request);
+        dd($request);
         $categories = Category::all();
 
 
@@ -29,6 +31,8 @@ class QuizzleController extends Controller
 
         ]);
         try {
+            $name = $request->name;
+
             $quiz = Quiz::create($validation);
 
         } catch (QueryException $e) {
@@ -44,7 +48,7 @@ class QuizzleController extends Controller
     }
 
     // return view('quizzle', ['name' => $request->name]);
-    return view('quizzle', compact('categories'));
+    return view('quizzle', compact('categories', 'name'));
     }
 }
 

@@ -69,6 +69,8 @@
     questionInput.placeholder = "Your question";
     questionInput.classList.add("form-control", "my-3");
     questionInput.style.fontWeight = "bold";
+    questionInput.name = "questions[]"; // Add the name attribute
+
 
     newDiv.appendChild(questionInput);
 
@@ -86,13 +88,15 @@
         answerInput.type = "text";
         answerInput.classList.add("form-control", "text-danger");
         answerInput.placeholder = "Answer " + i;
+        answerInput.name = "answers[]";
         newDiv.appendChild(answerInput);
     }
 
     let answerInput = document.createElement("input");
     answerInput.type="text";
     answerInput.placeholder = "correct answer";
-    answerInput.classList.add("form-control", 'my-3', "text-success");
+    answerInput.classList.add("form-control", 'my-3', "text-success")
+    answerInput.name = "answers[]";
 
      // Create a delete button
             let deleteBtn = document.createElement("button");
@@ -126,8 +130,6 @@
 }
 
 });
-
-
 </script>
 @endsection
 
