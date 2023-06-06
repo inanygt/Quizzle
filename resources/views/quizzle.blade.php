@@ -1,5 +1,4 @@
 @extends('masters')
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -40,9 +39,7 @@
                 </div>
                 {{-- Add --}}
                 <button type="button" id="add" class="btn btn-primary my-3">Add a Question</button>
-                {{--   Questions --}}
-                <div id="myDiv"></div>
-                <div id="answer"></div>
+                <div id="container"></div>
                 {{-- Submit  --}}
                 <input type="submit" class="form-control my-3" value="confirm">
 
@@ -54,9 +51,12 @@
 {{-- Javascript --}}
 <script>
     let btn = document.getElementById('add');
-    let container = document.getElementById('myDiv');
+    let container = document.getElementById('container');
     let answer = document.getElementById('answer');
+    let hquest = document.getElementById('hquest');
+    let questionCounter = 0; // Counter to keep track of the question number
 
+    // EVENTLISTENER
     btn.addEventListener("click", function() {
     // Create a new div element
     let newDiv = document.createElement("div");
@@ -66,7 +66,6 @@
     answerInput.placeholder = "correct answer";
     answerInput.classList.add("form-control");
     answerInput.classList.add("my-3");
-    answer.appendChild(answerInput);
 
     // Create an input field for the question
     let questionInput = document.createElement("input");
@@ -76,9 +75,8 @@
     questionInput.classList.add("my-3");
     newDiv.appendChild(questionInput);
 
-
-
-
+       // Increment the question counter
+    questionCounter++;
 
     // Create input fields for answers
     for (let i = 1; i <= 3; i++) {
@@ -89,8 +87,15 @@
         newDiv.appendChild(answerInput);
     }
 
+     // Create a heading element for the question
+    let questionHeading = document.createElement("h3");
+    questionHeading.textContent = "Question " + questionCounter;
+
     // Append the new div element to the container
+    container.appendChild(questionHeading);
     container.appendChild(newDiv);
+    container.appendChild(answerInput);
+
 });
 
 
