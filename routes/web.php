@@ -43,20 +43,46 @@ Route::get('/quiz', function() {
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 
 
-// jorianAPItest
+// jorianAPItest 1
+
+// Route::get('/quiz/start', function () {
+//     return view('start');
+// });
+// Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
+// Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
+// Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
+// Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
+
+// Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
+
+// //Jorian joinQuiz
+// Route::get('/join', [QuizController::class, 'showJoinPage']);
+// Route::post('/join', [QuizController::class, 'joinQuiz']);
+
+// Route::get('/quiz/{quiz}/start', [QuizController::class, 'startQuiz'])->name('quiz.start');
+
+
+// JorianApitest 2
 Route::get('/quiz/start', function () {
     return view('start');
 });
+
 Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
+
+
+
 Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
-Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
-Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
 
 Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
+Route::get('quizzes/{quiz}/results', [QuizController::class, 'results'])->name('quizzes.results');
 
-//Jorian joinQuiz
-Route::get('/join', [QuizController::class, 'showJoinPage']);
-Route::post('/join', [QuizController::class, 'joinQuiz']);
+Route::get('/quiz/nextQuestion/{index}', 'QuizController@nextQuestion')->name('quiz.nextQuestion');
+
+// Route::get('/quiz/{quiz_id}/question/{question_number}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
+// Route::post('/quiz/{quiz_id}/nextQuestion', [QuizController::class, 'nextQuestion'])->name('quiz.nextQuestion');
+
+
+
 
 
 require __DIR__.'/auth.php';

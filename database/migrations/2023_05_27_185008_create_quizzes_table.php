@@ -17,9 +17,9 @@ class CreateQuizzesTable extends Migration
             $table->id();
             $table->string('subject');
             $table->integer('num_questions');
-            $table->integer('time_per_question');
-            $table->string('language');
             $table->timestamps();
+
+
         });
     }
 

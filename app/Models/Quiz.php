@@ -20,9 +20,7 @@ use App\Models\Category;
 //jorian
 class Quiz extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['subject', 'num_questions', 'time_per_question', 'language'];
+    protected $fillable = ['subject', 'num_questions'];
 
     public function questions()
     {

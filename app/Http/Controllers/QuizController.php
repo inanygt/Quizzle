@@ -4,145 +4,134 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use App\Models\Question;
-use App\Services\OpenAIService;
+use App\Models\Answer;
+use App\Services\OpenAiService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Log;
+
+
 
 class QuizController extends Controller
 {
-    private $openAIService;
+    private $openAiService;
 
-    public function __construct(OpenAIService $openAIService)
+    public function __construct(OpenAiService $openAiService)
     {
-        $this->openAIService = $openAIService;
+        $this->openAiService = $openAiService;
     }
 
     public function startQuiz(Request $request)
-    {
-        // Validation
-        $request->validate([
-            'subject' => 'required|string|max:255',
-            'num_questions' => 'required|integer|min:1',
-            'time_per_question' => 'required|integer|min:1',
-            'language' => 'required|string|in:en,es', // add other languages here
-        ]);
+{
+    $subject = $request->input('subject');
+    $numQuestions = $request->input('num_questions');
 
-        Log::info('startQuiz method was hit with request data', ['request_data' => $request->all()]);
+    // Generate the questions and answers
+    $quizData = $this->openAiService->generateQuestion($subject, $numQuestions);
 
-        // Create a new Quiz with the given subject
-        $quiz = Quiz::create([
-            'subject' => $request->subject,
-            'num_questions' => $request->num_questions,
-            'time_per_question' => $request->time_per_question,
-            'language' => $request->language
-        ]);
+    // Log the quiz data received from the OpenAI service
+    Log::info('Received Quiz Data:', $quizData);
 
-        Log::info('Quiz created', ['quiz' => $quiz]);
+    // Create the quiz
+    $quiz = Quiz::create([
+        'subject' => $subject,
+        'num_questions' => $numQuestions,
+    ]);
 
-        // Generate questions and save them to the database
-        for ($i = 0; $i < $request->num_questions; $i++) {
-            try {
-                $generatedQuestion = $this->openAIService->generateQuestion($request->subject);
+    // Log the created quiz
+    Log::info('Created Quiz:', $quiz->toArray());
 
-                Log::info('Generated question', ['generatedQuestion' => $generatedQuestion]);
+    // Create the questions and answers using a transaction
+    DB::transaction(function () use ($quiz, $quizData) {
+        foreach ($quizData as $questionData) {
+            Log::info('Processing Question:', $questionData); // Log each question being processed
 
-                $question = Question::create([
-                    'quiz_id' => $quiz->id,
-                    'question' => $generatedQuestion['question'],
-                    'choices' => json_encode($generatedQuestion['choices']),
-                    'correct_answer' => $generatedQuestion['correct_answer']
+            $questionText = $questionData['question'];
+
+            $question = $quiz->questions()->create([
+                'text' => $questionText,
+            ]);
+
+            Log::info('Created Question:', $question->toArray()); // Log each question created
+
+            foreach ($questionData['answers'] as $answerData) {
+                $answer = $question->answers()->create([
+                    'text' => $answerData['text'],
+                    'is_correct' => $answerData['is_correct'],
                 ]);
 
-                Log::info('Question created', ['question' => $question]);
-            } catch (\Exception $e) {
-                Log::error('Failed to generate question', ['error' => $e->getMessage()]);
-                return redirect()->back()->withErrors(['error' => 'Failed to generate question']);
+                Log::info('Created Answer:', $answer->toArray()); // Log each answer created
             }
         }
+    });
 
-        // Redirect to the first question
-        return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => 1]);
+    return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => 1]);
+}
+
+
+
+
+
+    public function showQuestion($quizId, $questionNumber)
+    {
+        $quiz = Quiz::find($quizId);
+        $question = $quiz->questions()->skip($questionNumber - 1)->first();
+        return view('question', ['question' => $question]);
     }
 
-    public function showQuestion(Quiz $quiz, $questionNumber)
+    public function submitAnswer(Request $request, $quizId, $questionNumber)
     {
+        $answerId = $request->input('answer_id'); // Assuming you are passing answer id in request.
+
+        $quiz = Quiz::find($quizId);
         $question = $quiz->questions()->skip($questionNumber - 1)->first();
-        return view('question', ['quiz' => $quiz, 'questionNumber' => $questionNumber, 'question' => $question]);
-    }
+        $answer = $question->answers()->where('id', $answerId)->first();
 
-    public function submitAnswer(Quiz $quiz, $questionNumber, Request $request)
-    {
-        // Validate the submitted answer
-        $request->validate([
-            'answer' => 'required|integer',
-        ]);
-
-        // Retrieve the question
-        $question = $quiz->questions()->skip($questionNumber - 1)->first();
-
-        // Check the submitted answer against the correct answer
-        $chosenAnswer = json_decode($question->choices, true)[$request->answer];
-        if ($chosenAnswer == $question->correct_answer) {
+        if ($answer->is_correct) {
             // The answer is correct
-
-            // Retrieve the current score from the session, or 0 if no score has been recorded yet
-            $score = session('score', 0);
-
-            // Increment the score
-            $score++;
-
-            // Store the new score in the session
-            session(['score' => $score]);
-        }
-
-        // Determine the next question number
-        $nextQuestionNumber = $questionNumber + 1;
-
-        if ($nextQuestionNumber > $quiz->num_questions) {
-            // The quiz is over
-
-            // Retrieve the final score from the session
-            $finalScore = session('score', 0);
-
-            // Clear the score from the session
-            session()->forget('score');
-
-            // Redirect to the results page
-            return redirect()->route('quiz.results', ['quiz' => $quiz->id, 'score' => $finalScore]);
+            // Handle the score calculation and storage as per your application logic.
         } else {
-            // There are more questions to answer
+            // The answer is incorrect
+            // Handle this case as per your application logic.
+        }
 
-            // Redirect to the next question
-            return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => $nextQuestionNumber]);
+        $nextQuestionNumber = $questionNumber + 1;
+        if($nextQuestionNumber > $quiz->num_questions) {
+            return redirect()->route('quiz.results', ['quizId' => $quizId]);
+        } else {
+            return redirect()->route('quiz.showQuestion', ['quizId' => $quizId, 'questionNumber' => $nextQuestionNumber]);
         }
     }
 
-
-    public function results(Quiz $quiz, $score)
+    public function results($quizId)
     {
-        return view('result', ['score' => $score]);
+        // You'd fetch the quiz and calculate the score here.
+        // This is just a placeholder.
+        $score = '';
+
+        return view('results', ['score' => $score]);
     }
 
-    public function showJoinPage()
-    {
-        return view('join');
-    }
+    public function nextQuestion($index) {
+        // get quiz from session
+        $quiz = session('quiz');
 
-    public function joinQuiz(Request $request)
-    {
-        // Here you should validate the input and find the quiz with this ID or code
-        // Then, add the user to this quiz in the database
+        if ($index < count($quiz)) {
+            // get next question
+            $question = $quiz[$index];
 
-        // For example:
-        $quiz = Quiz::findOrFail($request->input('quiz_id'));
-
-        // Note: This assumes you have a pivot table for quizzes and users.
-        // You need to adjust this according to your specific application structure.
-        $quiz->users()->attach(Auth::id());
-
-        return redirect()->route('quiz.show', ['id' => $quiz->id]);
+            return response()->json([
+                'question' => $question,
+                'status' => 'success',
+            ]);
+        } else {
+            // if there's no more questions, return an appropriate message.
+            return response()->json([
+                'message' => 'Quiz completed',
+                'status' => 'completed',
+            ]);
+        }
     }
 
 }
