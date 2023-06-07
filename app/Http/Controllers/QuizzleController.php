@@ -33,8 +33,13 @@ class QuizzleController extends Controller
         $name = $request->name;
         $quiz = Quiz::create($validation);
 
-    $questionQuiz = $request->questions;
-    $correct_answer = $request->correct_answer;
+        $questionQuiz = $request->questions;
+        $correct_answer = $request->correct_answer;
+
+        $question = Question::find(20); // Retrieve a specific question from the database
+        // dd($question);
+        $answers = $question->answers()->get();
+        dd($answers);
 
     // Associate the child model with the parent model
     foreach ($questionQuiz as $index => $questionQuiz) {
