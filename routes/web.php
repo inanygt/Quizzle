@@ -9,6 +9,7 @@ use App\Models\Quiz;
 
 // Controllers
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GeographyController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizzleController;
 
@@ -62,12 +63,10 @@ Route::post('/join', [QuizController::class, 'joinQuiz']);
 
 //inan
 // Categories
-Route::get('/geography', function() {
-    // Get all quizzes with category from relation
-    $quizzes = Quiz::where('category_id', 1)->get();
+Route::get('/geography', [GeographyController::class, 'index'])->name('geography');
+Route::get('/geography/{id}', function() {
 
-    return view('categories/geography', compact('quizzes'));
-})->name('geography');
+});
 
 Route::get('/music', function() {
     $quizzes = Quiz::where('category_id', 2)->get();
