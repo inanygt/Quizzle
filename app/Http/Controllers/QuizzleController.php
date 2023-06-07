@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 // Models
+
+use App\Models\Answer;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Category;
@@ -35,17 +37,19 @@ class QuizzleController extends Controller
 
         $questionQuiz = $request->questions;
         $correct_answer = $request->correct_answer;
+        $answers = $request->answers;
 
-        $question = Question::find(20); // Retrieve a specific question from the database
-        // dd($question);
-        $answers = $question->answers()->get();
-        dd($answers);
+        dd($request);
 
-    // Associate the child model with the parent model
-    foreach ($questionQuiz as $index => $questionQuiz) {
-        $question = new Question(['question' => $questionQuiz, 'correct_answer' => $correct_answer[$index]]);
-        $quiz->questions()->save($question);
-}
+        // Associate the child model with the parent model
+        foreach ($questionQuiz as $index => $questionQuiz) {
+            $question = new Question(['question' => $questionQuiz, 'correct_answer' => $correct_answer[$index]]);
+            $quiz->questions()->save($question);
+        }
+        foreach($answers as $answers) {
+            $answer = new Answer(['answer' => $answers]);
+            $question->answers()->save($answer);
+        }
 
     //     try {
 
