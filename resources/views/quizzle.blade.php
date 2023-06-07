@@ -22,19 +22,20 @@
             <form action="/quizzle" method="POST">
                 @csrf
                 <div class="mb-3">
-                <select class="form-select" aria-label="Default select example" name="category_id" >>
-                    {{-- Categories --}}
-                    <option selected>Choose a category</option>
-                    @foreach ($categories as $category)
-                    <option value="1"> {{$category->name}} </option>
-                    @endforeach
-                </select>
+                <select class="form-select" aria-label="Default select example" name="category_id">
+    <option disabled selected value="">Choose a category</option>
+    {{-- Categories --}}
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+
                 </div>
                 <div class="mb-3">
 
                     <input type="text" placeholder="Name your fuzzle"  class="form-control"name="name">
                 </div>
-                 <div class="mb-3">
+                <div class="mb-3">
                     <input type="text" placeholder="Subject of your fuzzle"  class="form-control"name="subject">
                 </div>
                 {{-- Add --}}
@@ -96,7 +97,7 @@
     answerInput.type="text";
     answerInput.placeholder = "correct answer";
     answerInput.classList.add("form-control", 'my-3', "text-success")
-    answerInput.name = "answers[]";
+    answerInput.name = "correct_answer[]";
 
      // Create a delete button
             let deleteBtn = document.createElement("button");

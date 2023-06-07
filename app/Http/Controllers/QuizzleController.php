@@ -19,47 +19,51 @@ class QuizzleController extends Controller
     }
 
     public function form(Request $request) {
-        // dd($request);
-        $categories = Category::all();
 
+        $categories = Category::all();
 
         $validation = $request->validate([
-             'name' => 'required',
-             'category_id' => 'required',
-             'subject' => 'required',
-             'approved' => 'required'
+            'name' => 'required',
+            'category_id' => 'required',
+            'subject' => 'required',
+            'approved' => 'required'
 
         ]);
-        try {
-        $categories = Category::all();
 
         $name = $request->name;
         $quiz = Quiz::create($validation);
 
-        $questionQuiz = $request->questions;
-        // dd($questionQuiz);
+    $questionQuiz = $request->questions;
+    $correct_answer = $request->correct_answer;
 
-         // Associate the child model with the parent model
-        foreach ($questionQuiz as $questionQuiz) {
-        $question = new Question(['question' => $questionQuiz]);
+    // Associate the child model with the parent model
+    foreach ($questionQuiz as $index => $questionQuiz) {
+        $question = new Question(['question' => $questionQuiz, 'correct_answer' => $correct_answer[$index]]);
         $quiz->questions()->save($question);
-    }
+}
 
-        } catch (QueryException $e) {
-        $errorCode = $e->errorInfo[1];
-        if ($errorCode == 1062) {
-            // Duplicate entry error
-            $errorMessage = 'This account already exists already exists.';
-            return view('/quizzle', ['errorMessage' => $errorMessage]);
-        }
-        // Other database error
-        $errorMessage = 'An error occurred.';
-        return view('/quizzle', ['errorMessage' => $errorMessage]);
-    }
+    //     try {
+
+
+
+    //     }
+
+    //     } catch (QueryException $e) {
+    //     $errorCode = $e->errorInfo[1];
+    //     if ($errorCode == 1062) {
+    //         // Duplicate entry error
+    //         $errorMessage = 'This account already exists already exists.';
+    //         return view('/quizzle', ['errorMessage' => $errorMessage]);
+    //     }
+    //     // Other database error
+    //     $errorMessage = 'An error occurred.';
+    //     return view('/quizzle', ['errorMessage' => $errorMessage]);
+    // }
 
 
     // return view('quizzle', ['name' => $request->name]);
     return view('quizzle', compact('categories', 'name'));
     }
 }
+
 
