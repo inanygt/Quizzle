@@ -27,28 +27,22 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Laravel Breeze Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Laravel breeze profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Laravel Quizzle
 Route::get('/quizzle', [QuizzleController::class, 'index'])->name('quizzle')->middleware('auth');
 Route::post('/quizzle', [QuizzleController::class, 'form']);
-
-
-
-// Route::get('/discover', function() {
-//     return view('components/discover');
-// })->name('discover');
-
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
-
-
 
 // jorianAPItest
 Route::get('/quiz/start', function () {
