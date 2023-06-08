@@ -64,9 +64,7 @@ Route::post('/join', [QuizController::class, 'joinQuiz']);
 //inan
 // Categories
 Route::get('/geography', [GeographyController::class, 'index'])->name('geography');
-Route::get('/geography/{id}', function() {
-
-});
+Route::get('/geography/{id}', [GeographyController::class, 'play']);
 
 Route::get('/music', function() {
     $quizzes = Quiz::where('category_id', 2)->get();
