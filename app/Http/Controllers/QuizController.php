@@ -56,9 +56,17 @@ class QuizController extends Controller
                 Log::info('Created Question:', $question->toArray()); // Log each question created
 
                 foreach ($questionData['answers'] as $answerData) {
+                    $answerText = $answerData['text'];
+                    $isCorrect = $answerData['is_correct'];
+
+                    // If the answer is correct, remove the 'Correct Answer:' part from the answer
+                    if ($isCorrect) {
+                        $answerText = str_replace('Correct Answer:', '', $answerText);
+                    }
+
                     $answer = $question->answers()->create([
-                        'text' => $answerData['text'],
-                        'is_correct' => $answerData['is_correct'],
+                        'text' => $answerText,
+                        'is_correct' => $isCorrect,
                     ]);
 
                     Log::info('Created Answer:', $answer->toArray()); // Log each answer created
@@ -117,5 +125,4 @@ class QuizController extends Controller
 }
 
 
-    // your other methods...
 }
