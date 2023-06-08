@@ -108,12 +108,16 @@ class QuizController extends Controller
             Session::put('score', Session::get('score') + 1);
         }
 
-        if ($questionNumber < $quiz->num_questions) {
-            return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => $questionNumber + 1]);
-        } else {
-            // if it was the last question, redirect to the result page
-            return redirect()->route('quiz.showResult', ['quiz' => $quiz->id]);
-        }
+
+    if ($questionNumber < $quiz->questions()->count()) {
+        return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => $questionNumber + 1]);
+    } else {
+        // if it was the last question, increment the score by 0
+        Session::put('score', Session::get('score') + 0);
+        return redirect()->route('quiz.showResult', ['quiz' => $quiz->id]);
+    }
+
+
     }
 
     public function showResult(Quiz $quiz)
