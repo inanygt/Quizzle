@@ -1,2 +1,4 @@
-<p>Your score: {{ $score }}</p>
-<p><a href="/quiz/start">Start a new quiz</a></p>
+<div class="container">
+    <h1>Quiz Result</h1>
+    <h2>Your score: {{ $score }}/{{ $quiz->num_questions }}</h2>
+</div>

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <form method="POST" action="/quiz/nextQuestion">
+    <form method="POST" action="{{ route('quiz.submitAnswer', ['quiz' => $quiz->id, 'questionNumber' => $questionNumber]) }}">
         @csrf
         <h1>{{ $question->text }}</h1>
         @foreach($question->answers as $answer)
@@ -20,6 +20,7 @@
         <input type="hidden" name="question_id" value="{{ $question->id }}">
         <button type="submit">Next Question</button>
     </form>
+
 </div>
 </body>
 </html>

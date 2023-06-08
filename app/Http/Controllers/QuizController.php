@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Log;
+use Session;
 
 
 
@@ -73,36 +74,84 @@ class QuizController extends Controller
 
 
 
-    public function showQuestion($quizId, $questionNumber)
-    {
-        $quiz = Quiz::find($quizId);
-        $question = $quiz->questions()->skip($questionNumber - 1)->first();
-        return view('question', ['question' => $question]);
+public function showQuestion(Quiz $quiz, int $questionNumber)
+{
+    $question = $quiz->questions()->skip($questionNumber - 1)->first();
+
+    if ($question === null) {
+        // handle the error, maybe redirect to the result page
+        return redirect()->route('quiz.showResult', ['quiz' => $quiz->id]);
     }
 
-    public function submitAnswer(Request $request, $quizId, $questionNumber)
-    {
-        $answerId = $request->input('answer_id'); // Assuming you are passing answer id in request.
+    return view('question', ['quiz' => $quiz, 'questionNumber' => $questionNumber, 'question' => $question]);
+}
 
-        $quiz = Quiz::find($quizId);
-        $question = $quiz->questions()->skip($questionNumber - 1)->first();
-        $answer = $question->answers()->where('id', $answerId)->first();
 
-        if ($answer->is_correct) {
-            // The answer is correct
-            // Handle the score calculation and storage as per your application logic.
-        } else {
-            // The answer is incorrect
-            // Handle this case as per your application logic.
-        }
 
-        $nextQuestionNumber = $questionNumber + 1;
-        if($nextQuestionNumber > $quiz->num_questions) {
-            return redirect()->route('quiz.results', ['quizId' => $quizId]);
-        } else {
-            return redirect()->route('quiz.showQuestion', ['quizId' => $quizId, 'questionNumber' => $nextQuestionNumber]);
-        }
+public function submitAnswer(Request $request, Quiz $quiz, int $questionNumber)
+{
+    // if the session does not have 'score', set it to 0
+    if (!Session::has('score')) {
+        Session::put('score', 0);
     }
+
+    $validated = $request->validate([
+        'answer' => 'required|integer',
+    ]);
+
+    $question = $quiz->questions()->skip($questionNumber - 1)->first();
+    $correctAnswer = $question->answers()->where('is_correct', true)->first();
+
+    if ($correctAnswer->id == $request->input('answer')) {
+        // if the answer is correct, increment the score
+        Session::put('score', Session::get('score') + 1);
+    }
+
+    if ($questionNumber < $quiz->num_questions) {
+        return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => $questionNumber + 1]);
+    } else {
+        // if it was the last question, redirect to the result page
+        return redirect()->route('quiz.showResult', ['quiz' => $quiz->id]);
+    }
+}
+
+public function showResult(Quiz $quiz)
+{
+    $score = Session::get('score');
+    // clear the score for the next quiz
+    Session::forget('score');
+
+    return view('result', ['quiz' => $quiz, 'score' => $score]);
+}
+
+
+
+// public function submitAnswer(Request $request, $quizId)
+// {
+//     $answerId = $request->input('answer_id'); // Assuming you are passing answer id in request.
+
+//     $quiz = Quiz::find($quizId);
+//     $questionNumber = $request->session()->get('questionNumber', 1);
+//     $question = $quiz->questions()->skip($questionNumber - 1)->first();
+//     $answer = $question->answers()->where('id', $answerId)->first();
+
+//     if ($answer->is_correct) {
+//         // The answer is correct
+//         // Handle the score calculation and storage as per your application logic.
+//     } else {
+//         // The answer is incorrect
+//         // Handle this case as per your application logic.
+//     }
+
+//     $nextQuestionNumber = $questionNumber + 1;
+//     $request->session()->put('questionNumber', $nextQuestionNumber);  // store next question number in session
+
+//     if($nextQuestionNumber > $quiz->num_questions) {
+//         return redirect()->route('quiz.results', ['quizId' => $quizId]);
+//     } else {
+//         return redirect()->route('quiz.showQuestion', ['quizId' => $quizId]);
+//     }
+// }
 
     public function results($quizId)
     {

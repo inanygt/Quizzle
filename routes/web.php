@@ -69,12 +69,9 @@ Route::get('/quiz/start', function () {
 
 Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
 
+Route::post('/quiz/{quiz}/question/{question}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
 
-
-Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
-
-Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
-Route::get('quizzes/{quiz}/results', [QuizController::class, 'results'])->name('quizzes.results');
+Route::get('quiz/{quiz}/results', [QuizController::class, 'results'])->name('quiz.results');
 
 Route::get('/quiz/nextQuestion/{index}', 'QuizController@nextQuestion')->name('quiz.nextQuestion');
 
