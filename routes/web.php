@@ -62,7 +62,10 @@ Route::post('/join', [QuizController::class, 'joinQuiz']);
 
 
 //inan
-// Categories
+
+/// CATEGORIES ///
+
+// Geography ///
 Route::get('/geography', [GeographyController::class, 'index'])->name('geography');
 Route::get('/geography/{id}', [GeographyController::class, 'play']);
 
