@@ -40,54 +40,64 @@ class OpenAIService
     }
 
     public function parseResponse($responseArray)
-    {
-        // Extract the text from the response
-        $text = $responseArray['choices'][0]['text'];
+{
+    // Extract the text from the response
+    $text = $responseArray['choices'][0]['text'];
 
-        // Break the response into individual lines
-        $lines = explode("\n", $text);
+    // Break the response into individual lines
+    $lines = explode("\n", $text);
 
-        $quizData = [];
-        $question = '';
-        $answers = [];
-        $isFirstLine = true;
-        foreach ($lines as $line) {
-            // Skip empty lines
-            if (trim($line) === '') {
-                continue;
-            }
+    $isFirstLine = true;
+    $quizData = [];
+    $question = '';
+    $answers = [];
+    $correctAnswer = '';
 
-            // If the line starts with '+', it's a question
-            if (substr(trim($line), 0, 1) == '+') {
-                if (!$isFirstLine && !empty($question) && !empty($answers)) {
-                    $quizData[] = [
-                        'question' => $question,
-                        'answers' => $answers,
-                    ];
-                }
-                // Start a new question
-                $question = substr(trim($line), 1);
-                $answers = [];
-                $isFirstLine = false;
-            } else if (substr(trim($line), 0, 1) == '-' || substr(trim($line), 0, 1) == '*') {
-                // If the line starts with '-', it's an incorrect answer, '*' indicates the correct answer
-                $isCorrect = (substr(trim($line), 0, 1) == '*') ? true : false;
-                $answerText = substr(trim($line), 1);
-                $answers[] = [
-                    'text' => $answerText,
-                    'is_correct' => $isCorrect,
+    foreach ($lines as $line) {
+        // Skip empty lines
+        if (trim($line) === '') {
+            continue;
+        }
+
+        // If the line starts with '+', it's a question
+        if (substr(trim($line), 0, 1) == '+') {
+            if (!$isFirstLine && !empty($question) && !empty($answers)) {
+                $quizData[] = [
+                    'question' => $question,
+                    'answers' => $answers,
+                    'correctAnswer' => $correctAnswer,
                 ];
             }
-        }
-
-        // Add the last question to the array
-        if (!empty($question) && !empty($answers)) {
-            $quizData[] = [
-                'question' => $question,
-                'answers' => $answers,
+            // Start a new question
+            $question = substr(trim($line), 1);
+            $answers = [];
+            $correctAnswer = '';
+            $isFirstLine = false;
+        } else if (substr(trim($line), 0, 1) == '-' || substr(trim($line), 0, 1) == '*') {
+            // If the line starts with '-', it's an incorrect answer, '*' indicates the correct answer
+            $isCorrect = (substr(trim($line), 0, 1) == '*') ? true : false;
+            $answerText = substr(trim($line), 1);
+            $answers[] = [
+                'text' => $answerText,
+                'is_correct' => $isCorrect,
             ];
+            // if the answer is correct, it is the correct answer of the question
+            if ($isCorrect) {
+                $correctAnswer = $answerText;
+            }
         }
-
-        return $quizData;
     }
+
+    // Add the last question to the array
+    if (!empty($question) && !empty($answers)) {
+        $quizData[] = [
+            'question' => $question,
+            'answers' => $answers,
+            'correctAnswer' => $correctAnswer,
+        ];
+    }
+
+    return $quizData;
+}
+
 }

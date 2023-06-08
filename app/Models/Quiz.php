@@ -20,7 +20,7 @@ use App\Models\Category;
 //jorian
 class Quiz extends Model
 {
-    protected $fillable = ['subject', 'num_questions'];
+    protected $fillable = ['subject', 'num_questions', 'score'];
 
     public function questions()
     {
