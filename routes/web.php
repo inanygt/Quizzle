@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeographyController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizzleController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +25,7 @@ use App\Http\Controllers\QuizzleController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Laravel Breeze Dashboard
 Route::get('/dashboard', function () {
