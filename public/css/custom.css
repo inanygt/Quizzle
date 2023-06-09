@@ -98,3 +98,33 @@ h2 {
     font-size: 22px;
     margin-top: 30px;
 }
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.answer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.answer-block {
+    flex: 0 1 calc(50% - 10px);
+    box-sizing: border-box;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.answer-block:hover {
+    background-color: #d0d0d0;
+}
+
+.answer-radio {
+    display: none;
+}
