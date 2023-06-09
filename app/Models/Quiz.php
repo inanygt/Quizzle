@@ -23,10 +23,18 @@ class Quiz extends Model
     use HasFactory;
 
 
-    protected $fillable = ['name', 'approved', 'category_id', 'subject', 'num_questions', 'time_per_question', 'language'];
+    protected $fillable = ['name', 'approved', 'category_id', 'subject', 'num_questions', 'time_per_question', 'language', 'count', 'rating'];
 
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    // Get most played quizes
+    public function getMostPlayedQuizzes()
+    {
+    return $this->orderBy('count', 'desc')
+                ->limit(6)
+                ->get();
     }
 }
