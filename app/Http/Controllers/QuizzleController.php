@@ -35,21 +35,62 @@ class QuizzleController extends Controller
         $name = $request->name;
         $quiz = Quiz::create($validation);
 
-        $questionQuiz = $request->questions;
-        $correct_answer = $request->correct_answer;
+        $questions = $request->questions;
+        $correctAnswers = $request->correct_answer;
         $answers = $request->answers;
 
-        dd($request);
+        // Create an array to store the created questions and answers
+        $createdQuestions = [];
+        $createdAnswers = [];
 
-        // Associate the child model with the parent model
-        foreach ($questionQuiz as $index => $questionQuiz) {
-            $question = new Question(['question' => $questionQuiz, 'correct_answer' => $correct_answer[$index]]);
+        // dd($request);
+        // // Associate the child model with the parent model
+        foreach ($questions as $index => $questionText) {
+            $question = new Question(['question' => $questionText, 'correct_answer' => $correctAnswers[$index]]);
             $quiz->questions()->save($question);
         }
         foreach($answers as $answers) {
             $answer = new Answer(['answer' => $answers]);
             $question->answers()->save($answer);
         }
+
+//         // Loop through the questions and create/update them
+// foreach ($questions as $index => $questionText) {
+//     // Create or update the question based on the index
+//     $question = Question::updateOrCreate(['id' => $index], [
+//         'question' => $questionText,
+//         'quiz_id' => $quiz->id,
+//         'correct_answer' => $correctAnswers[$index]
+//         // Add other attributes as needed
+//     ]);
+
+//     // Add the question to the createdQuestions array
+//     $createdQuestions[] = $question;
+
+//     // Determine the starting index for the answers related to this question
+//     $answerStartIndex = $index * 3;
+
+//     // Loop through the answers and create/update them
+//     for ($i = $answerStartIndex; $i < $answerStartIndex + 3; $i++) {
+//         // Create or update the answer based on the index
+//         $answer = Answer::updateOrCreate(['id' => $i], [
+//             'question_id' => $question->id,
+//             'answer' => $answers[$i],
+//             // Add other attributes as needed
+//         ]);
+
+//         // Add the answer to the createdAnswers array
+//         $createdAnswers[] = $answer;
+//     }
+
+//     // Set the correct answer for the question
+//     $question->correct_answer = $correctAnswers[$index];
+//     $question->save();
+// }
+
+// Use the $createdQuestions and $createdAnswers arrays as needed
+
+
 
     //     try {
 

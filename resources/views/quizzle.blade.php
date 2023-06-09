@@ -98,6 +98,7 @@
     answerInput.placeholder = "correct answer";
     answerInput.classList.add("form-control", 'my-3', "text-success")
     answerInput.name = "correct_answer[]";
+    answerInput.name = "answer[]";
 
      // Create a delete button
             let deleteBtn = document.createElement("button");
