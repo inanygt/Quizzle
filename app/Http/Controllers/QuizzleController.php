@@ -53,8 +53,8 @@ foreach ($questions as $index => $questionData) {
     $quiz->questions()->save($question);
 
     // Create and associate the child models (Answers)
-    $answerData = $answers; // Get all answers
-    $answerData = (array) $answerData; // Ensure $answerData is an array
+    $startIndex = $index * 4; // Starting index for answers
+    $answerData = array_slice($answers, $startIndex, 4); // Get the answers for this question
 
     foreach ($answerData as $answer) {
         $answerModel = new Answer();
@@ -66,6 +66,7 @@ foreach ($questions as $index => $questionData) {
         $question->answers()->save($answerModel);
     }
 }
+
 
     // foreach ($answers as $index => $answerData) {
     //     $answer = new Answer();
