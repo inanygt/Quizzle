@@ -72,62 +72,61 @@
     questionInput.style.fontWeight = "bold";
     questionInput.name = "questions[]"; // Add the name attribute
 
-
     newDiv.appendChild(questionInput);
 
-       // Increment the question counter
+    // Increment the question counter
     questionCounter++;
 
-     // Create a heading element for the question
+    // Create a heading element for the question
     let questionHeading = document.createElement("h3");
     questionHeading.textContent = "Question " + questionCounter;
     questionHeading.classList.add('mt-5');
 
     // Create input fields for answers
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 4; i++) {
         let answerInput = document.createElement("input");
         answerInput.type = "text";
-        answerInput.classList.add("form-control", "text-danger");
+        answerInput.classList.add("form-control" , 'my-2');
         answerInput.placeholder = "Answer " + i;
         answerInput.name = "answers[]";
         newDiv.appendChild(answerInput);
     }
 
-    let answerInput = document.createElement("input");
-    answerInput.type="text";
-    answerInput.placeholder = "correct answer";
-    answerInput.classList.add("form-control", 'my-3', "text-success")
-    answerInput.name = "correct_answer[]";
-    answerInput.name = "answer[]";
+    // Create a delete button
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete Question";
+        deleteBtn.classList.add("btn", "btn-danger");
+        deleteBtn.addEventListener("click", function() {
+        container.removeChild(questionHeading);
+        container.removeChild(newDiv);
+        container.removeChild(answerInput);
+        container.removeChild(deleteBtn);
+        questionCounter--;
+        btn.disabled = false;
+        });
 
-     // Create a delete button
-            let deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "Delete Question";
-            deleteBtn.classList.add("btn", "btn-danger");
-            deleteBtn.addEventListener("click", function() {
-                container.removeChild(questionHeading);
-                container.removeChild(newDiv);
-                container.removeChild(answerInput);
-                container.removeChild(deleteBtn);
-                questionCounter--;
-                btn.disabled = false;
-            });
+        let correctAnswer = document.createElement("input");
+        correctAnswer.input = "text";
+        correctAnswer.classList.add("form-control" , 'my-2', "text-success");
+        correctAnswer.placeholder ="retype correct answer";
+        correctAnswer.name='correctAnswers[]';
+
+
 
     // Append the new div element to the container
     container.appendChild(questionHeading);
     container.appendChild(newDiv);
-    container.appendChild(answerInput);
+    container.appendChild(correctAnswer);
     container.appendChild(deleteBtn);
 
-
-     if (questionCounter +1 > maxQuestions) {
-            // Disable the button or perform any necessary action
-            let maxReachedText = document.createElement("p");
-            maxReachedText.textContent = "Maximum number of questions reached.";
-            maxReachedText.classList.add("alert", "alert-warning");
-            maxReachedText.setAttribute("role", "alert");
-            container.appendChild(maxReachedText);
-            btn.disabled = true;
+    if (questionCounter +1 > maxQuestions) {
+        // Disable the button or perform any necessary action
+        let maxReachedText = document.createElement("p");
+        maxReachedText.textContent = "Maximum number of questions reached.";
+        maxReachedText.classList.add("alert", "alert-warning");
+        maxReachedText.setAttribute("role", "alert");
+        container.appendChild(maxReachedText);
+        btn.disabled = true;
         }
 }
 

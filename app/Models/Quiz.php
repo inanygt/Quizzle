@@ -30,11 +30,21 @@ class Quiz extends Model
         return $this->hasMany(Question::class);
     }
 
-    // Get most played quizes
+    // Get most played quizles
     public function getMostPlayedQuizzes()
     {
     return $this->orderBy('count', 'desc')
-                ->limit(6)
+                ->limit(4)
+                ->get();
+    }
+
+    // Best raded quizles
+
+    public function bestRadedQuizzes()
+    {
+        return $this->orderBy('rating', 'desc')
+                ->limit(4)
                 ->get();
     }
 }
+

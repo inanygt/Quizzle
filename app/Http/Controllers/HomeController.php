@@ -11,8 +11,12 @@ class HomeController extends Controller
 {
     public function index() {
         $quiz = new Quiz();
-        $quizzes = $quiz->getMostPlayedQuizzes();
+        $pQuizzes = $quiz->getMostPlayedQuizzes();
 
-    return view('home', compact('quizzes'));
+        $quiz = new Quiz();
+        $rQuizzes = $quiz->bestRadedQuizzes();
+
+
+    return view('home', compact('pQuizzes', 'rQuizzes'));
     }
 }
