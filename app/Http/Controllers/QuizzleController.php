@@ -30,9 +30,6 @@ class QuizzleController extends Controller
         // get related questions from the random quiz
         $quiz = Quiz::with('questions.answers')->find($quizId);
 
-        // dd($quiz);
-
-
         return view('playquizzle', compact('randomQuiz', 'quiz'));
     }
 
