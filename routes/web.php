@@ -108,24 +108,4 @@ Route::get('/math', function() {
 })->name('math');
 
 
-//inan
-
-/// CATEGORIES ///
-
-// Geography ///
-Route::get('/geography', [GeographyController::class, 'index'])->name('geography');
-Route::get('/geography/{id}', [GeographyController::class, 'play']);
-
-Route::get('/music', function() {
-    $quizzes = Quiz::where('category_id', 2)->get();
-    return view('categories/music', compact('quizzes'));
-})->name('music');
-
-Route::get('/math', function() {
-    $quizzes = Quiz::where('category_id', 3)->get();
-
-    return view('categories/math', compact('quizzes'));
-})->name('math');
-
-
 require __DIR__.'/auth.php';
