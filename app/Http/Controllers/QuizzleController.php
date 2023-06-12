@@ -20,6 +20,10 @@ class QuizzleController extends Controller
         return view('quizzle', compact('categories'));
     }
 
+    public function random() {
+        return view('playquizzle');
+    }
+
     public function form(Request $request) {
 
         $categories = Category::all();
