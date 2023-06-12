@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Models
+use App\Models\Category;
+use App\Models\Quiz;
+
 // Controllers
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuizController;
@@ -19,8 +23,8 @@ use App\Http\Controllers\QuizController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return view('home');
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -41,6 +45,7 @@ Route::get('/quiz', function() {
 // })->name('discover');
 
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
+
 
 
 // jorianAPItest 1
@@ -76,11 +81,54 @@ Route::get('quiz/{quiz}/results', [QuizController::class, 'results'])->name('qui
 Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
 Route::get('/quiz/{quiz}/result', [QuizController::class, 'showResult'])->name('quiz.showResult');
 
+
 // Route::get('/quiz/{quiz_id}/question/{question_number}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
 // Route::post('/quiz/{quiz_id}/nextQuestion', [QuizController::class, 'nextQuestion'])->name('quiz.nextQuestion');
 
 
 
+
+
+//inan
+// Categories
+Route::get('/geography', function() {
+    // Get all quizzes with category from relation
+    $quizzes = Quiz::where('category_id', 1)->get();
+
+    return view('categories/geography', compact('quizzes'));
+})->name('geography');
+
+Route::get('/music', function() {
+    $quizzes = Quiz::where('category_id', 2)->get();
+    return view('categories/music', compact('quizzes'));
+})->name('music');
+
+Route::get('/math', function() {
+    $quizzes = Quiz::where('category_id', 3)->get();
+
+    return view('categories/math', compact('quizzes'));
+})->name('math');
+
+
+//inan
+// Categories
+Route::get('/geography', function() {
+    // Get all quizzes with category from relation
+    $quizzes = Quiz::where('category_id', 1)->get();
+
+    return view('categories/geography', compact('quizzes'));
+})->name('geography');
+
+Route::get('/music', function() {
+    $quizzes = Quiz::where('category_id', 2)->get();
+    return view('categories/music', compact('quizzes'));
+})->name('music');
+
+Route::get('/math', function() {
+    $quizzes = Quiz::where('category_id', 3)->get();
+
+    return view('categories/math', compact('quizzes'));
+})->name('math');
 
 
 require __DIR__.'/auth.php';

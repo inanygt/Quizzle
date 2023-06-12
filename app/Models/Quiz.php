@@ -27,3 +27,17 @@
 //         return $this->hasMany(Question::class);
 //     }
 // }
+
+
+//jorian
+// class Quiz extends Model
+// {
+//     use HasFactory;
+
+//     protected $fillable = ['subject', 'num_questions', 'time_per_question', 'language'];
+
+//     public function questions()
+//     {
+//         return $this->hasMany(Question::class);
+//     }
+// }
