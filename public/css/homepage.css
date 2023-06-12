@@ -1,5 +1,6 @@
 .row-front {
     height: 93vh;
+    margin-bottom: 2rem;
 }
 
 .row-front::before {

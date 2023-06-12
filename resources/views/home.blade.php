@@ -5,15 +5,16 @@
             {{-- Cards --}}
                     {{-- Most played Quizzles --}}
                     <div class="row">
-                        <h3 class="mt-3">Most played quizzles!</h3>
+                        <h3 class="mt-5">Most played quizzles!</h3>
                         @foreach ($pQuizzes as $pQuiz)
-                        <div class="col-6">
+                        <div class="col-3">
                             <div class="card mt-3">
+
                                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $pQuiz->name }}</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="{{ url('/geography', ['id' => $pQuiz->id]) }}" class="btn btn-primary">Play!</a>
+                                    {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
+                                    <a href="{{ url('/geography', ['id' => $pQuiz->id]) }}" class="btn btn-dark">Play!</a>
                                 </div>
                             </div>
                         </div>
@@ -28,8 +29,8 @@
                                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $rQuiz->name }}</h4>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="{{ url('/geography', ['id' => $rQuiz->id]) }}" class="btn btn-primary">Play!</a>
+                                    {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
+                                    <a href="{{ url('/geography', ['id' => $rQuiz->id]) }}" class="btn btn-dark">Play!</a>
                                 </div>
                             </div>
                         </div>
