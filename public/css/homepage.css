@@ -1,8 +1,28 @@
 .row-front {
-    background-color: aquamarine;
-    height: 100vh;
+    height: 93vh;
+}
+
+.row-front::before {
+    content: "";
+    background-image: url("/images/5327613.jpg");
+    /* background-image: url("/images/5311568.jpg"); */
+    /* background-image: url("/images/patterns.jpg"); */
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.3;
+    z-index: -3;
 }
 
 .homeHeading {
     font-size: 5rem;
+    line-height: 0.9;
+    position: relative;
+}
+
+.deopacity {
+    position: relative;
 }
