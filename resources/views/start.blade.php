@@ -18,16 +18,7 @@
     <label for="num_questions">Number of Questions:</label>
     <input type="number" id="num_questions" name="num_questions">
 
-    <label for="time_per_question">Time per Question (seconds):</label>
-    <input type="number" id="time_per_question" name="time_per_question">
 
-    <label for="language">Language:</label>
-    <select id="language" name="language">
-        <option value="en">English</option>
-        <option value="es">Spanish</option>
-        <option value="nl">Dutch</option>
-        <!-- add other languages here -->
-    </select>
 
     <button type="submit">Start Quiz</button>
 </form>
@@ -35,4 +26,16 @@
 
 
 </body>
+
+
 </html>
+
+{{-- <label for="time_per_question">Time per Question (seconds):</label>
+<input type="number" id="time_per_question" name="time_per_question">
+
+<label for="language">Language:</label>
+<select id="language" name="language">
+    <option value="en">English</option>
+    <option value="nl">Dutch</option>
+    <!-- add other languages here -->
+</select> --}}

@@ -1,27 +1,40 @@
 <?php
 
-namespace App\Models;
+// namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Category;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Model;
+// use App\Models\Category;
 
 
+// // class Quiz extends Model
+// // {
+// //     use HasFactory;
+
+// //     public function category() {
+// //         return $this->hasMany(Category::class, 'id');
+// //     }
+// // }
+
+
+// //jorian
 // class Quiz extends Model
 // {
-//     use HasFactory;
+//     protected $fillable = ['subject', 'num_questions', 'score'];
 
-//     public function category() {
-//         return $this->hasMany(Category::class, 'id');
+//     public function questions()
+//     {
+//         return $this->hasMany(Question::class);
 //     }
 // }
 
 
 //jorian
-class Quiz extends Model
-{
-    use HasFactory;
+// class Quiz extends Model
+// {
+//     use HasFactory;
 
+//     protected $fillable = ['subject', 'num_questions', 'time_per_question', 'language'];
 
     protected $fillable = ['name', 'approved', 'category_id', 'subject', 'num_questions', 'time_per_question', 'language', 'count', 'rating'];
 

@@ -11,16 +11,19 @@ use Illuminate\Database\Eloquent\Model;
 // }
 
 //jorian
-namespace App\Models;
+// namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
-{
-    use HasFactory;
+// class Question extends Model
+// {
+//     protected $fillable = ['text', 'quiz_id'];
 
-    protected $fillable = ['quiz_id', 'question', 'choices', 'correct_answer'];
+//     public function quiz()
+//     {
+//         return $this->belongsTo(Quiz::class);
+//     }
 
     public function quiz()
     {

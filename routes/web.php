@@ -45,19 +45,67 @@ Route::post('/quizzle', [QuizzleController::class, 'form']);
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 
 // jorianAPItest
+
+
+// jorianAPItest 1
+
+// Route::get('/quiz/start', function () {
+//     return view('start');
+// });
+// Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
+// Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
+// Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
+// Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
+
+// Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
+
+// //Jorian joinQuiz
+// Route::get('/join', [QuizController::class, 'showJoinPage']);
+// Route::post('/join', [QuizController::class, 'joinQuiz']);
+
+// Route::get('/quiz/{quiz}/start', [QuizController::class, 'startQuiz'])->name('quiz.start');
+
+
+// JorianApitest 2
 Route::get('/quiz/start', function () {
     return view('start');
 });
+
 Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
+
+Route::post('/quiz/{quiz}/question/{question}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
+
+Route::get('quiz/{quiz}/results', [QuizController::class, 'results'])->name('quiz.results');
+
 Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
-Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
-Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
+Route::get('/quiz/{quiz}/result', [QuizController::class, 'showResult'])->name('quiz.showResult');
 
-Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
 
-//Jorian joinQuiz
-Route::get('/join', [QuizController::class, 'showJoinPage']);
-Route::post('/join', [QuizController::class, 'joinQuiz']);
+// Route::get('/quiz/{quiz_id}/question/{question_number}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
+// Route::post('/quiz/{quiz_id}/nextQuestion', [QuizController::class, 'nextQuestion'])->name('quiz.nextQuestion');
+
+
+
+
+
+//inan
+
+/// CATEGORIES ///
+
+// Geography ///
+Route::get('/geography', [GeographyController::class, 'index'])->name('geography');
+Route::get('/geography/{id}', [GeographyController::class, 'play']);
+
+Route::get('/music', function() {
+    $quizzes = Quiz::where('category_id', 2)->get();
+    return view('categories/music', compact('quizzes'));
+})->name('music');
+
+Route::get('/math', function() {
+    $quizzes = Quiz::where('category_id', 3)->get();
+
+    return view('categories/math', compact('quizzes'));
+})->name('math');
 
 
 //inan
