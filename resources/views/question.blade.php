@@ -8,7 +8,7 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-    var timeRemaining = 15; // 15 seconds per question
+    var timeRemaining = 20; // 20 seconds per question
     var timerElement = document.getElementById('timer');
     var formElement = document.getElementById('quiz-form');
     var noAnswerElement = document.getElementById('noAnswer');

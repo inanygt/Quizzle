@@ -20,7 +20,7 @@
                         </div>
                         @endforeach
                     </div>
-                    {{-- Best raded Quizzles --}}
+                    {{-- Best rated Quizzles --}}
                     <div class="row">
                         <h3 class="mt-3">Best rated Quizzles!</h3>
                         @foreach ($rQuizzes as $rQuiz)
