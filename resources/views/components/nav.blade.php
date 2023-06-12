@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/nav.css') }}">
 
 
-<nav class="navbar bg-light navbar-expand-lg">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{route('home')}}">
         <img id="logo" src="{{ asset('images/quizzleLogo.png') }}" alt="Image">

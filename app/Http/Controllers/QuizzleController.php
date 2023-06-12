@@ -21,7 +21,12 @@ class QuizzleController extends Controller
     }
 
     public function random() {
-        return view('playquizzle');
+
+        // Get random quiz
+        $randomQuiz = Quiz::inRandomOrder()->first();
+
+
+        return view('playquizzle', compact('randomQuiz'));
     }
 
     public function form(Request $request) {
