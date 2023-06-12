@@ -7,15 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class AiQuestion extends Model
 {
-    protected $fillable = ['text', 'quiz_id'];
+    use HasFactory;
+
+    protected $table = 'aiquestions'; // Add this line
+
+    protected $fillable = ['text', 'aiquiz_id'];
 
     public function quiz()
     {
-        return $this->belongsTo(AiQuiz::class);
+        return $this->belongsTo(AiQuiz::class, 'aiquiz_id');
     }
 
     public function answers()
     {
-        return $this->hasMany(AiAnswer::class);
+        return $this->hasMany(AiAnswer::class, 'aiquestion_id');
     }
 }

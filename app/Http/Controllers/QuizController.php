@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quiz;
-use App\Models\Question;
-use App\Models\Answer;
 use App\Models\AiQuiz;
 use App\Models\AiQuestion;
 use App\Models\AiAnswer;
@@ -37,7 +34,7 @@ class QuizController extends Controller
         Log::info('Received Quiz Data:', $quizData);
 
         // Create the quiz
-        $quiz = Quiz::create([
+        $quiz = AiQuiz::create([
             'subject' => $subject,
             'num_questions' => $numQuestions,
         ]);
@@ -80,7 +77,7 @@ class QuizController extends Controller
         return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => 1]);
     }
 
-    public function showQuestion(Quiz $quiz, int $questionNumber)
+    public function showQuestion(AiQuiz $quiz, int $questionNumber)
     {
         $question = $quiz->questions()->skip($questionNumber - 1)->first();
 
@@ -92,7 +89,7 @@ class QuizController extends Controller
         return view('question', ['quiz' => $quiz, 'questionNumber' => $questionNumber, 'question' => $question]);
     }
 
-    public function submitAnswer(Request $request, Quiz $quiz, int $questionNumber)
+    public function submitAnswer(Request $request, AiQuiz $quiz, int $questionNumber)
     {
         // if the session does not have 'score', set it to 0
         if (!Session::has('score')) {
@@ -111,25 +108,20 @@ class QuizController extends Controller
             Session::put('score', Session::get('score') + 1);
         }
 
-
-    if ($questionNumber < $quiz->questions()->count()) {
-        return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => $questionNumber + 1]);
-    } else {
-        // if it was the last question, increment the score by 0
-        Session::put('score', Session::get('score') + 0);
-        return redirect()->route('quiz.showResult', ['quiz' => $quiz->id]);
+        if ($questionNumber < $quiz->questions()->count()) {
+            return redirect()->route('quiz.showQuestion', ['quiz' => $quiz->id, 'questionNumber' => $questionNumber + 1]);
+        } else {
+            // if it was the last question, increment the score by 0
+            Session::put('score', Session::get('score') + 0);
+            return redirect()->route('quiz.showResult', ['quiz' => $quiz->id]);
+        }
     }
 
+    public function showResult(AiQuiz $quiz)
+    {
+        // Fetch the score from the session
+        $score = Session::get('score', 0);
 
+        return view('result', ['quiz' => $quiz, 'score' => $score]);
     }
-
-    public function showResult(Quiz $quiz)
-{
-    // Fetch the score from the session
-    $score = Session::get('score', 0);
-
-    return view('result', ['quiz' => $quiz, 'score' => $score]);
-}
-
-
 }
