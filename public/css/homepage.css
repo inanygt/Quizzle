@@ -6,8 +6,6 @@
 .row-front::before {
     content: "";
     background-image: url("/images/5327613.jpg");
-    /* background-image: url("/images/5311568.jpg"); */
-    /* background-image: url("/images/patterns.jpg"); */
     background-size: cover;
     position: absolute;
     top: 0px;
