@@ -1,7 +1,7 @@
 /* custom.css */
 
 body {
-    background-color: lightgray
+    background-color: lightgray;
 }
 
 .container {
@@ -32,11 +32,9 @@ body {
     vertical-align: middle;
 }
 
-
 button {
     margin-top: 20px;
 }
-
 
 form {
     background-color: #fff;
