@@ -23,11 +23,12 @@ class QuizzleController extends Controller
     public function random() {
 
         // Get random quiz
-        $randomQuiz = Quiz::inRandomOrder()->first();
-        // $randomQuiz = Quiz::find(4);
+        // $randomQuiz = Quiz::inRandomOrder()->first();
+        $randomQuiz = Quiz::find(4);
+        // dd($randomQuiz);
         $quizId = $randomQuiz->id;
         // get related questions from the random quiz
-        $quiz = Quiz::with('questions')->find($quizId);
+        $quiz = Quiz::with('questions.answers')->find($quizId);
 
         // dd($quiz);
 
