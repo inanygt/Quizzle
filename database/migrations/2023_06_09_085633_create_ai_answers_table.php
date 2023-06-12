@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateAiAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('questions', function (Blueprint $table) {
-            //
+        Schema::create('aianswers', function (Blueprint $table) {
             $table->id();
-            $table->integer('quiz_id');
-            $table->string('question');
-            $table->string('correct_answer');
+            $table->foreignId('aiquestion_id')->constrained()->onDelete('cascade');
+            $table->string('text');
+            $table->boolean('is_correct');
             $table->timestamps();
-            $table->json('choices');
-
         });
     }
 
@@ -32,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('questions', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('aianswers');
     }
-};
+}

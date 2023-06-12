@@ -44,20 +44,21 @@ Route::get('/quizzle', [QuizzleController::class, 'index'])->name('quizzle')->mi
 Route::post('/quizzle', [QuizzleController::class, 'form']);
 Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 
-// jorianAPItest
+// jorianAPI
+
 Route::get('/quiz/start', function () {
     return view('start');
 });
+
 Route::post('/quiz/start', [QuizController::class, 'startQuiz']);
+
+Route::post('/quiz/{quiz}/question/{question}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
+
+Route::get('quiz/{quiz}/results', [QuizController::class, 'results'])->name('quiz.results');
+
 Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
-Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer']);
-Route::get('/quiz/{quiz}/results/{score}', [QuizController::class, 'results'])->name('quiz.results');
+Route::get('/quiz/{quiz}/result', [QuizController::class, 'showResult'])->name('quiz.showResult');
 
-Route::post('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'submitAnswer'])->name('quiz.submitAnswer');
-
-//Jorian joinQuiz
-Route::get('/join', [QuizController::class, 'showJoinPage']);
-Route::post('/join', [QuizController::class, 'joinQuiz']);
 
 
 //inan
