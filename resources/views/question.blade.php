@@ -38,6 +38,7 @@
     </script>
 </head>
 <body>
+
     <div class="container">
         <form method="POST" id="quiz-form" action="{{ route('quiz.submitAnswer', ['quiz' => $quiz->id, 'question' => $questionNumber]) }}">
             @csrf
@@ -51,7 +52,7 @@
                 </label>
             @endforeach
             </div>
-            <input type="radio" id="noAnswer" name="answer" value="noAnswer" style="display:none">
+            <input type="radio" id="noAnswer" name="answer" value="1" style="display:none">
             {{-- <button type="submit">Next Question</button> --}}
         </form>
     </div>
