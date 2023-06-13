@@ -7,14 +7,19 @@
         @foreach ($quiz->questions as $question)
         <h4>Question: {{ $question->question }}</h4>
         {{-- For each answers related questions --}}
-        @foreach ($question->answers as $answer)
+        @foreach ($question->answers as $index => $answer)
+
+        <div class="radio-group">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <input  class="form-check-input" type="radio" name="group{{$index}}" id="flexRadioDefault1" value="{{ $answer->id }}">
             <label class="form-check-label" for="flexRadioDefault1">
-    {{ $answer->answer }}
+     {{$index}} {{ $answer->answer }}
             </label>
         </div>
-    @endforeach
+        </div>
+        @endforeach
+        {{-- Submit button --}}
+        <input type="submit" class="btn btn-dark">
     @endforeach
     </div>
 </div>

@@ -33,6 +33,10 @@ class QuizzleController extends Controller
         return view('playquizzle', compact('randomQuiz', 'quiz'));
     }
 
+    public function postRandom(Request $request) {
+        dd($request);
+    }
+
     public function form(Request $request) {
 
         $categories = Category::all();
@@ -79,16 +83,6 @@ foreach ($questions as $index => $questionData) {
         $question->answers()->save($answerModel);
     }
 }
-
-
-    // foreach ($answers as $index => $answerData) {
-    //     $answer = new Answer();
-    //     $answer->answer = $answerData;
-    // }
-
-
-
-
 
     //     try {
 
