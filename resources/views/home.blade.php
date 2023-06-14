@@ -1,6 +1,6 @@
 @extends('masters')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         @include('homepage')
             {{-- Cards --}}
                     {{-- Most played Quizzles --}}
@@ -63,7 +63,12 @@
                         </div>
                         @endforeach
                     </div>
-                    {{-- Best raded Quizzles --}}
+
+                    {{-- MIDDLEPAGE --}}
+                    @include('middlepage')
+
+
+                    {{-- Best rated Quizzles --}}
                     <div class="row mt-5">
                         <h2 class="mt-3">Best rated Quizzles!</h2>
                         @foreach ($rQuizzes as $rQuiz)

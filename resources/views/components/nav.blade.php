@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="{{ asset('css/nav.css') }}">
-
-
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{route('home')}}">
