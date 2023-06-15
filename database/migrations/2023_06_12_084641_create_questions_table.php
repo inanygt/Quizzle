@@ -10,10 +10,8 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quiz_id')->constrained('quizzes')->onDelete('cascade');
+            $table->foreignId('quiz_id')->constrained()->onDelete('cascade');
             $table->string('question');
-            $table->string('correct_answer');
-            $table->json('choices');
             $table->timestamps();
         });
     }

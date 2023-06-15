@@ -6,29 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAnswersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->integer('question_id');
+            $table->integer('question_id')->constrained()->onDelete('cascade');
             $table->string('text');
             $table->boolean('is_correct');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
-    {
-        Schema::dropIfExists('answers');
-    }
+{
+    Schema::table('questions', function (Blueprint $table) {
+        $table->dropForeign(['correct_answer']);
+    });
+
+    Schema::dropIfExists('answers');
+}
+
 }

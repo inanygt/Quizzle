@@ -59,6 +59,18 @@ Route::get('quiz/{quiz}/results', [QuizController::class, 'results'])->name('qui
 Route::get('/quiz/{quiz}/question/{questionNumber}', [QuizController::class, 'showQuestion'])->name('quiz.showQuestion');
 Route::get('/quiz/{quiz}/result', [QuizController::class, 'showResult'])->name('quiz.showResult');
 
+//new quizzle routes
+Route::get('/quizzle', [QuizzleController::class, 'index'])->name('quizzle.index');
+Route::post('/quizzle', [QuizzleController::class, 'form'])->name('quizzle.form');
+Route::get('/quizzle/play', [QuizzleController::class, 'showQuizzes'])->name('quizzle.showQuizzes');
+Route::get('/quizzle/initiate/{quiz}', [QuizzleController::class, 'initiateQuiz'])->name('quizzle.initiateQuiz');
+Route::post('/quizzle/processAnswer', [QuizzleController::class, 'processAnswer'])->name('quizzle.processAnswer');
+Route::get('/quizzle/result', [QuizzleController::class, 'displayResult'])->name('quizzle.displayResult');
+Route::get('/quizzle/nextQuestion', [App\Http\Controllers\QuizzleController::class, 'nextQuestion'])->name('quizzle.nextQuestion');
+
+
+
+
 
 
 //inan

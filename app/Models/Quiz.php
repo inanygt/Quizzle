@@ -11,31 +11,6 @@ class Quiz extends Model
 {
     use HasFactory;
 
-// //     public function category() {
-// //         return $this->hasMany(Category::class, 'id');
-// //     }
-// // }
-
-
-// //jorian
-// class Quiz extends Model
-// {
-//     protected $fillable = ['subject', 'num_questions', 'score'];
-
-//     public function questions()
-//     {
-//         return $this->hasMany(Question::class);
-//     }
-// }
-
-
-//jorian
-// class Quiz extends Model
-// {
-//     use HasFactory;
-
-//     protected $fillable = ['subject', 'num_questions', 'time_per_question', 'language'];
-
     protected $fillable = ['name', 'approved', 'category_id', 'subject', 'num_questions', 'time_per_question', 'language', 'count', 'rating'];
 
     public function questions()
@@ -59,5 +34,13 @@ class Quiz extends Model
                 ->limit(4)
                 ->get();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
+
+
 
