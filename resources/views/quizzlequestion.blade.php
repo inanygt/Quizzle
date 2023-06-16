@@ -38,7 +38,8 @@
     <div class="container">
         <h1>{{$quiz->name}}</h1>
         <div id="timer"></div>
-        <p>Question {{$nextQuestion->id}}</p>
+        <p>Question {{ Session::get('question_number') }}</p>
+
         <p>{{$nextQuestion->question}}</p>
 
         <form id="quiz-form" method="post" action="{{route('quizzle.processAnswer')}}">

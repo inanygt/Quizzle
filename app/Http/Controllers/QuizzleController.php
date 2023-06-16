@@ -133,4 +133,19 @@ class QuizzleController extends Controller
         // Display the result
         return view('quizzleresult', ['quiz' => $quiz, 'score' => $score]);
     }
+
+    public function rateQuiz(Request $request, $quizId)
+{
+    $quiz = Quiz::findOrFail($quizId);
+
+    $validated = $request->validate([
+        'rating' => 'required|integer|min:1|max:5',
+    ]);
+
+    $quiz->rating = $validated['rating'];
+    $quiz->save();
+
+    return back()->with('message', 'Thank you for rating this quiz!');
+}
+
 }
