@@ -2,12 +2,15 @@
 
 /* font-family: 'Open Sans', sans-serif; */
 
+html,
+body {
+    height: 100%;
+}
+
 body {
     background-color: #f2f7f2;
-
     font-family: "Open Sans", sans-serif;
     line-height: 1.6;
-    height: 100%;
 }
 
 /* Heading */
@@ -219,4 +222,11 @@ form button:hover {
         margin-top: 15rem;
         margin-bottom: 15rem;
     }
+}
+
+.vertical-center {
+    min-height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
