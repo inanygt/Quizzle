@@ -71,10 +71,9 @@
 
                     {{-- Best rated Quizzles --}}
                     <div class="row mt-5">
-                        <h2 class="mt-3">Best rated Quizzles!</h2>
                     {{-- Best rated Quizzles --}}
                     <div class="row">
-                        <h3 class="mt-3">Best rated Quizzles!</h3>
+                        <h2 class="mt-3">Best rated Quizzles!</h2>
                         @foreach ($rQuizzes as $rQuiz)
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="card mt-3">

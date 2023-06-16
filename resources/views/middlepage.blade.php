@@ -1,4 +1,4 @@
-<div class="middle-container container-fluid mt-5 ">
+<div class="middle-container container-fluid ">
         <div class="row ">
             <div class="col">
                 <h1 class="middle-heading">Why Quizzle?</h1>
