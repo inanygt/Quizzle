@@ -1,6 +1,6 @@
 @extends('quizmaster')
 @section('content')
-    <div class="vertical-center">
+    <div class="vertical-center ai-quiz-container">
         <div class="row">
             <div class="col d-flex flex-column align-items-center text-center">
             {{-- <h1>Quiz Results</h1> --}}

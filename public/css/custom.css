@@ -8,7 +8,7 @@ body {
 }
 
 body {
-    background-color: #f2f7f2;
+    background-color: #f8f9fa;
     font-family: "Open Sans", sans-serif;
     line-height: 1.6;
 }
@@ -97,7 +97,7 @@ nav {
     font-size: 3rem;
     padding-top: 4.3rem;
     padding-bottom: 2rem;
-    color: #3581b8;
+    color: #ff7f11;
 }
 
 /* FOOTER */ /* FOOTER */ /* FOOTER */
@@ -113,10 +113,6 @@ footer {
 /* AI JORIAN */ /* AI JORIAN */ /* AI JORIAN */
 
 /* AI */
-
-.start-quiz-container {
-    width: 100%;
-}
 
 .question {
     font-size: 1.5em;
@@ -139,12 +135,10 @@ footer {
 }
 
 form {
-    background-color: #fff;
     padding: 2em;
     border-radius: 0.5em;
-
     width: 100%;
-    max-width: 600px; /* This limits the width of the form to 600px */
+    max-width: 600px;
 }
 
 form input,
@@ -170,6 +164,7 @@ form button:hover {
 }
 
 .answer {
+    margin-top: 2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -225,8 +220,12 @@ form button:hover {
 }
 
 .vertical-center {
-    min-height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.ai-quiz-container {
+    background-color: #f8f9fa;
+    height: 93vh;
 }

@@ -1,11 +1,11 @@
 @extends('quizmaster')
 @section('content')
-
-    <div class="container">
+    <div class="vertical-center ai-quiz-container">
+    <div class="row">
+        <div class="col ">
         <form method="POST" id="quiz-form" action="{{ route('quiz.submitAnswer', ['quiz' => $quiz->id, 'question' => $questionNumber]) }}">
             @csrf
-            <h1>{{ $question->text }}</h1>
-            <div id="timer"></div>
+            <h2>{{ $question->text }}</h2>
             <div class="answer">
             @foreach($question->answers as $answer)
                 <label for="answer{{ $answer->id }}" class="answer-block" onclick="document.getElementById('answer{{ $answer->id }}').click();">
@@ -15,38 +15,41 @@
             @endforeach
             </div>
             <input type="radio" id="noAnswer" name="answer" value="1" style="display:none">
+            <div id="timer"></div>
         </form>
+        </div>
+    </div>
     </div>
 
-     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    var timeRemaining = 20; // 20 seconds per question
-    var timerElement = document.getElementById('timer');
-    var formElement = document.getElementById('quiz-form');
-    var noAnswerElement = document.getElementById('noAnswer');
+    {{-- JavaScript --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        var timeRemaining = 20; // 20 seconds per question
+        var timerElement = document.getElementById('timer');
+        var formElement = document.getElementById('quiz-form');
+        var noAnswerElement = document.getElementById('noAnswer');
 
-    function updateTimer() {
-        timerElement.innerText = "Time remaining: " + timeRemaining + " seconds";
+        function updateTimer() {
+            timerElement.innerText = "Time remaining: " + timeRemaining + " seconds";
 
-        timeRemaining--;
+            timeRemaining--;
 
-        if (timeRemaining < 0) {
-            noAnswerElement.checked = true;
-            formElement.submit();
+            if (timeRemaining < 0) {
+                noAnswerElement.checked = true;
+                formElement.submit();
+            }
         }
-    }
 
-    setInterval(updateTimer, 1000);
-    updateTimer();
+        setInterval(updateTimer, 1000);
+        updateTimer();
 
-    var answerRadios = document.querySelectorAll(".answer-radio");
-    answerRadios.forEach(function(radio) {
-        radio.addEventListener("click", function() {
-            formElement.submit();
+        var answerRadios = document.querySelectorAll(".answer-radio");
+        answerRadios.forEach(function(radio) {
+            radio.addEventListener("click", function() {
+                formElement.submit();
+            });
         });
     });
-});
 
     </script>
-
 @endsection
