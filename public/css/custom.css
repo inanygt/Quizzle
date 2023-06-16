@@ -1,16 +1,125 @@
-/* custom.css */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,500&display=swap");
+
+/* font-family: 'Open Sans', sans-serif; */
 
 body {
-    background-color: lightgray;
+    font-family: "Open Sans", sans-serif;
+    line-height: 1.6;
+    height: 100%;
 }
 
-.container {
-    width: 50%;
-    margin: 0 auto;
+/* Heading */
 
-    padding: 20px;
-    border-radius: 5px;
+h1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
 }
+
+h2 {
+    font-weight: 600;
+}
+
+/* HOMEPAGE */ /* HOMEPAGE */ /* HOMEPAGE */
+
+.row-front {
+    height: 93vh;
+    margin-bottom: 2rem;
+}
+
+.row-front::before {
+    content: "";
+    background-image: url("/images/5327613.jpg");
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.3;
+    z-index: -3;
+}
+
+.home-heading {
+    font-size: 5rem;
+    line-height: 0.9;
+    position: relative;
+}
+
+nav {
+    background-color: #ff7f11;
+}
+
+#logo {
+    width: 80px;
+}
+
+.nav-link {
+    /* color: white; */
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.fa-star {
+    color: #ff7f11;
+}
+
+/* MIDDLEPAGE */ /* MIDDLEPAGE */ /* MIDDLEPAGE */
+
+.middle-container {
+    margin-bottom: 5rem;
+}
+
+/* .middle-container {
+    margin-left: -13px;
+    margin-right: -13px;
+    position: relative;
+}
+
+.middle-container::before {
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    margin-top: 3rem;
+    content: "";
+    background-image: url("/images/5327613.jpg");
+    background-size: cover;
+    opacity: 0.3;
+} */
+
+.middle-heading {
+    font-size: 3rem;
+    line-height: 0.9;
+    text-align: center;
+    color: black;
+    font-size: 5rem;
+    position: relative;
+}
+
+.middle-titles {
+    /* position: relative; */
+}
+
+.middle-icon {
+    font-size: 3rem;
+    padding-top: 4.3rem;
+    padding-bottom: 2rem;
+}
+
+/* FOOTER */ /* FOOTER */ /* FOOTER */
+
+footer {
+    margin-top: 3rem;
+    background-color: #ff7f11;
+    padding: 3rem;
+    margin-left: -13px;
+    margin-right: -13px;
+}
+
+/* AI JORIAN */ /* AI JORIAN */ /* AI JORIAN */
 
 .question {
     font-size: 1.5em;
@@ -65,42 +174,6 @@ form button {
 
 form button:hover {
     background-color: #0056b3;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    padding: 30px;
-    background-color: #f4f4f4;
-}
-
-.container {
-    max-width: 800px;
-    margin: auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 7px;
-    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
-}
-
-h1,
-h2 {
-    color: #353535;
-}
-
-h1 {
-    font-size: 30px;
-}
-
-h2 {
-    font-size: 22px;
-    margin-top: 30px;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
 }
 
 .answer {
