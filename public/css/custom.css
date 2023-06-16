@@ -81,10 +81,11 @@ body {
     background: #fff;
     padding: 30px;
     border-radius: 7px;
-    box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
+h1,
+h2 {
     color: #353535;
 }
 

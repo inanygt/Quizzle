@@ -22,6 +22,23 @@ class QuizzleController extends Controller
         return view('quizzle', compact('categories'));
     }
 
+    public function random() {
+
+        // Get random quiz
+        // $randomQuiz = Quiz::inRandomOrder()->first();
+        $randomQuiz = Quiz::find(4);
+        // dd($randomQuiz);
+        $quizId = $randomQuiz->id;
+        // get related questions from the random quiz
+        $quiz = Quiz::with('questions.answers')->find($quizId);
+
+        return view('playquizzle', compact('randomQuiz', 'quiz'));
+    }
+
+    public function postRandom(Request $request) {
+        dd($request);
+    }
+
     public function form(Request $request) {
 
         $categories = Category::all();
