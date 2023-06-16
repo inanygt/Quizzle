@@ -72,6 +72,12 @@ Route::get('/quizzle/nextQuestion', [App\Http\Controllers\QuizzleController::cla
 Route::post('/rateQuiz/{quiz}', [QuizzleController::class, 'rateQuiz'])->name('quizzle.rateQuiz');
 
 
+Route::post('/quizzle/start', [QuizzleController::class, 'generateAiQuiz'])->name('quizzle.generateAiQuiz');
+
+// Route::get('/api/quizzes/latest', 'AiQuizController@getLatestQuiz');
+
+Route::get('/quizzle/latest', [QuizzleController::class, 'getLatestQuiz']);
+Route::post('/quizzle/start', [QuizzleController::class, 'generateAiQuiz']);
 
 
 

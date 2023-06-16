@@ -11,11 +11,28 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Session;
 use Illuminate\Support\Facades\Route;
+use App\Services\OpenAiService;
+use Log;
+
+use App\Models\AiQuiz;
+use App\Models\AiQuestion;
+use App\Models\AiAnswer;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
 
 
 
 class QuizzleController extends Controller
 {
+
+    private $openAiService;
+
+public function __construct(OpenAiService $openAiService)
+{
+    $this->openAiService = $openAiService;
+}
+
 
     public function index() {
         $categories = Category::all();
@@ -164,5 +181,73 @@ class QuizzleController extends Controller
 
     return back()->with('message', 'Thank you for rating this quiz!');
 }
+
+
+public function generateAiQuiz(Request $request)
+{
+    Session::put('score', 0);
+    $subject = $request->input('subject');
+    $numQuestions = $request->input('num_questions');
+
+    // Generate the questions and answers
+    $quizData = $this->openAiService->generateQuestion($subject, $numQuestions);
+
+    // Log the quiz data received from the OpenAI service
+    Log::info('Received Quiz Data:', $quizData);
+
+    // Create the quiz
+    $quiz = AiQuiz::create([
+        'subject' => $subject,
+        'num_questions' => $numQuestions,
+    ]);
+
+    // Log the created quiz
+    Log::info('Created Quiz:', $quiz->toArray());
+
+    // Create the questions and answers using a transaction
+    DB::transaction(function () use ($quiz, $quizData) {
+        foreach ($quizData as $questionData) {
+            Log::info('Processing Question:', $questionData); // Log each question being processed
+
+            $questionText = $questionData['question'];
+
+            $question = $quiz->questions()->create([
+                'text' => $questionText,
+            ]);
+
+            Log::info('Created Question:', $question->toArray()); // Log each question created
+
+            foreach ($questionData['answers'] as $answerData) {
+                $answerText = $answerData['text'];
+                $isCorrect = $answerData['is_correct'];
+
+                // If the answer is correct, remove the 'Correct Answer:' part from the answer
+                if ($isCorrect) {
+                    $answerText = str_replace('Correct Answer:', '', $answerText);
+                }
+
+                $answer = $question->answers()->create([
+                    'text' => $answerText,
+                    'is_correct' => $isCorrect,
+                ]);
+
+                Log::info('Created Answer:', $answer->toArray()); // Log each answer created
+            }
+        }
+    });
+
+    $quiz = $quiz->load(['questions.answers']);
+
+    return response()->json($quiz);
+}
+
+
+    public function getLatestQuiz() {
+        $quiz = AIQuiz::with(['questions.answers'])->latest()->first();
+
+        return response()->json($quiz);
+    }
+
+
 
 }

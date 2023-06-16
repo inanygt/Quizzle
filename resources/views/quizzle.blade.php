@@ -18,6 +18,19 @@
                 {{$errorMessage}}
             </div>
             @endif
+
+            <div class="container">
+                <form method="POST" action="/quizzle/start">
+                    @csrf
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject">
+
+                    <label for="num_questions">Number of Questions:</label>
+                    <input type="number" id="num_questions" name="num_questions">
+
+                    <button type="submit">Generate Ai Quiz</button>
+                </form>
+                </div>
             {{-- Form --}}
             <form action="/quizzle" method="POST">
                 @csrf
@@ -29,7 +42,6 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
-
                 </div>
                 <div class="mb-3">
 
@@ -57,83 +69,63 @@
     let questionCounter = 0; // Counter to keep track of the question number
     const maxQuestions = 5; // Maximum number of questions
 
-
-    // EVENTLISTENER
-    btn.addEventListener("click", function() {
-    if (questionCounter < maxQuestions) {
-        // Create a new div element
+    function createQuestion(questionData) {
         let newDiv = document.createElement("div");
 
-        // Create an input field for the question
         let questionInput = document.createElement("input");
         questionInput.type = "text";
-        questionInput.placeholder = "Your question";
+        questionInput.value = questionData.text;
         questionInput.classList.add("form-control", "my-3");
         questionInput.style.fontWeight = "bold";
-        questionInput.name = "questions[]"; // Add the name attribute
+        questionInput.name = "questions[]";
 
         newDiv.appendChild(questionInput);
 
-        // Increment the question counter
         questionCounter++;
 
-        // Create a heading element for the question
         let questionHeading = document.createElement("h3");
         questionHeading.textContent = "Question " + questionCounter;
         questionHeading.classList.add('mt-5');
 
-        // Create input fields for answers
-        for (let i = 1; i <= 4; i++) {
+        for (let i = 0; i < questionData.answers.length; i++) {
+            let answerData = questionData.answers[i];
             let answerDiv = document.createElement("div");
             answerDiv.classList.add("answer-option");
 
             let answerInput = document.createElement("input");
             answerInput.type = "text";
-            answerInput.classList.add("form-control" , 'my-2');
-            answerInput.placeholder = "Answer " + i;
-            answerInput.name = `answers[${questionCounter - 1}][${i - 1}][text]`; // Adjust the name attribute
+            answerInput.name = "answers[]";
+            answerInput.value = answerData.text;
+            answerInput.classList.add("form-control", "my-3");
 
-            let correctAnswerCheckbox = document.createElement("input");
-            correctAnswerCheckbox.type = "checkbox";
-            correctAnswerCheckbox.name = `answers[${questionCounter - 1}][${i - 1}][is_correct]`; // Adjust the name attribute
-            correctAnswerCheckbox.value = "1";
+            let correctCheckbox = document.createElement("input");
+            correctCheckbox.type = "checkbox";
+            correctCheckbox.name = "is_correct[]";
+            correctCheckbox.checked = answerData.is_correct;
 
             answerDiv.appendChild(answerInput);
-            answerDiv.appendChild(correctAnswerCheckbox);
-
+            answerDiv.appendChild(correctCheckbox);
             newDiv.appendChild(answerDiv);
         }
 
-        // Create a delete button
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete Question";
-        deleteBtn.type = "button";
-        deleteBtn.classList.add("btn", "btn-danger");
-        deleteBtn.addEventListener("click", function() {
-            container.removeChild(questionHeading);
-            container.removeChild(newDiv);
-            container.removeChild(deleteBtn);
-            questionCounter--;
-            btn.disabled = false;
-        });
-
-        // Append the new div element to the container
         container.appendChild(questionHeading);
         container.appendChild(newDiv);
-        container.appendChild(deleteBtn);
-
-        if (questionCounter === maxQuestions) { // Fix this condition
-            // Disable the button or perform any necessary action
-            let maxReachedText = document.createElement("p");
-            maxReachedText.textContent = "Maximum number of questions reached.";
-            maxReachedText.classList.add("alert", "alert-warning");
-            maxReachedText.setAttribute("role", "alert");
-            container.appendChild(maxReachedText);
-            btn.disabled = true;
-        }
     }
-});
 
+    window.onload = function() {
+        fetch('/quizzle/latest')
+            .then(response => response.json())
+            .then(data => {
+                data.questions.forEach(createQuestion);
+            });
+    };
+
+    btn.addEventListener('click', function() {
+        if (questionCounter >= maxQuestions) {
+            alert("You cannot add more questions!");
+            return;
+        }
+        createQuestion({ text: "", answers: [{ text: "", is_correct: false }] });
+    });
 </script>
 @endsection
-
