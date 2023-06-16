@@ -1,30 +1,22 @@
-<div class="middle-container ">
+<div class="middle-container container-fluid mt-5 ">
         <div class="row ">
             <div class="col">
-                <h1 class="middle-heading">Chatgpt</h1>
+                <h1 class="middle-heading">Why Quizzle?</h1>
             </div>
         </div>
         <div class="row mt-5">
-
-            <div class="col-sm-12 col-md-4">
-                <i class="middle-icons fa-solid fa-bomb fa-beat"></i>
-
-                <h2 class="middle-titles">
-                    Reduce test-taking anxiety(3)
-                </h2>
+            <div class="col-sm-12 col-md-4 d-flex flex-column align-items-center text-center">
+            <i class="middle-icon fa-solid fa-burst fa-2xl"></i>
+            <h2 class="middle-titles">Learn with fun</h2>
             </div>
-            <div class="col-sm-12 col-md-4">
-                <i class="middle-icons fa-solid fa-bomb fa-beat"></i>
-                <h2>
 
-                    Improve test scores by up to 50%(2)
-                </h2>
+            <div class="col-sm-12 col-md-4 d-flex flex-column align-items-center text-center">
+                <i class="middle-icon fa-solid fa-diamond fa-2xl"></i>
+                <h2 class="middle-titles">Share your knowledge!</h2>
             </div>
-                <div class="col-sm-12 col-md-4">
-                <i class="middle-icons fa-solid fa-bomb fa-beat"></i>
-
-
-                <h2>Save teachers 3.5 hrs/week(1)</h2>
+                <div class="col-sm-12 col-md-4 d-flex flex-column align-items-center text-center">
+                <i class="middle-icon fa-solid fa-fire fa-2xl"></i>
+                <h2 class="middle-titles">Powered by AI</h2>
             </div>
         </div>
 </div>

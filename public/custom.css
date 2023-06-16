@@ -73,6 +73,10 @@ h2 {
 /* MIDDLEPAGE */ /* MIDDLEPAGE */ /* MIDDLEPAGE */
 
 .middle-container {
+    margin-bottom: 5rem;
+}
+
+/* .middle-container {
     margin-left: -13px;
     margin-right: -13px;
     position: relative;
@@ -89,17 +93,24 @@ h2 {
     background-image: url("/images/5327613.jpg");
     background-size: cover;
     opacity: 0.3;
-}
+} */
 
 .middle-heading {
     font-size: 3rem;
     line-height: 0.9;
     text-align: center;
     color: black;
+    font-size: 5rem;
+    position: relative;
 }
 
-.middle-icons {
-    font-size: 5rem;
+.middle-titles {
+    /* position: relative; */
+}
+
+.middle-icon {
+    font-size: 3rem;
+    padding-top: 4.3rem;
     padding-bottom: 2rem;
 }
 
