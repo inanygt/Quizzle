@@ -3,10 +3,11 @@
 /* font-family: 'Open Sans', sans-serif; */
 
 body {
+    background-color: #f2f7f2;
+
     font-family: "Open Sans", sans-serif;
     line-height: 1.6;
     height: 100%;
-    background-color: #ffffff;
 }
 
 /* Heading */
@@ -75,7 +76,6 @@ nav {
 .middle-container {
     margin-top: 5rem;
     margin-bottom: 5rem;
-    background-color: white;
 }
 
 .middle-heading {
@@ -94,7 +94,7 @@ nav {
     font-size: 3rem;
     padding-top: 4.3rem;
     padding-bottom: 2rem;
-    color: #6eeb83;
+    color: #3581b8;
 }
 
 /* FOOTER */ /* FOOTER */ /* FOOTER */
@@ -108,6 +108,12 @@ footer {
 }
 
 /* AI JORIAN */ /* AI JORIAN */ /* AI JORIAN */
+
+/* AI */
+
+.start-quiz-container {
+    width: 100%;
+}
 
 .question {
     font-size: 1.5em;

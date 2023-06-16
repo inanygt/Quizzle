@@ -8,7 +8,7 @@
     {{-- link css --}}
         {{-- <link rel="stylesheet" href="{{asset('css/styles.css')}}"> --}}
 
-            <link rel="stylesheet" href="{{ asset('custom.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
 
     {{-- Cdn fontawesome --}}

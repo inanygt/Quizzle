@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,9 +7,10 @@
     <title>Document</title>
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
-<body>
-
-<div class="container">
+<body> --}}
+@extends('quizmaster')
+@section('content')
+<div class="start-quiz-container">
 <form method="POST" action="/quiz/start">
     @csrf
     <label for="subject">Subject:</label>
@@ -24,11 +25,11 @@
 </form>
 </div>
 
+@endsection
+{{-- </body>
 
-</body>
 
-
-</html>
+</html> --}}
 
 {{-- <label for="time_per_question">Time per Question (seconds):</label>
 <input type="number" id="time_per_question" name="time_per_question">
