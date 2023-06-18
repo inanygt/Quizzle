@@ -238,7 +238,9 @@ public function generateAiQuiz(Request $request)
 
     $quiz = $quiz->load(['questions.answers']);
 
-    return response()->json($quiz);
+    // Flash the quiz data to the session
+    return redirect('/quizzle')->with('quiz', $quiz);
+    // return redirect('/quizzle')->with('quiz', $quiz);
 }
 
 
@@ -248,6 +250,18 @@ public function generateAiQuiz(Request $request)
         return response()->json($quiz);
     }
 
+    public function getAiQuiz($quizId)
+    {
+        $aiQuiz = AiQuiz::with('questions.answers')->find($quizId);
+
+        if (!$aiQuiz) {
+            return response()->json(['error' => 'Quiz not found'], 404);
+        }
+
+        $aiQuizArray = $aiQuiz->toArray();
+
+        return response()->json($aiQuizArray);
+    }
 
 
 }

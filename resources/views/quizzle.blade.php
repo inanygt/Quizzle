@@ -20,7 +20,7 @@
             @endif
 
             <div class="container">
-                <form method="POST" action="/quizzle/start">
+                <form method="POST" action="/quizzle/start" id="aiQuizForm">
                     @csrf
                     <label for="subject">Subject:</label>
                     <input type="text" id="subject" name="subject">
@@ -28,7 +28,9 @@
                     <label for="num_questions">Number of Questions:</label>
                     <input type="number" id="num_questions" name="num_questions">
 
-                    <button type="submit">Generate Ai Quiz</button>
+
+
+                    <button type="submit" id="generateAiQuiz">Generate Ai Quiz</button>
                 </form>
                 </div>
             {{-- Form --}}
@@ -42,6 +44,11 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+
+
+
+
+
                 </div>
                 <div class="mb-3">
 
@@ -62,70 +69,131 @@
 </div>
 {{-- Javascript --}}
 <script>
+    let generateAiQuizBtn = document.getElementById('generateAiQuiz');
+    let aiQuizForm = document.getElementById('aiQuizForm');
+    let quizzleForm = document.querySelector('form[action="/quizzle"]');
     let btn = document.getElementById('add');
     let container = document.getElementById('container');
-    let answer = document.getElementById('answer');
-    let hquest = document.getElementById('hquest');
-    let questionCounter = 0; // Counter to keep track of the question number
-    const maxQuestions = 5; // Maximum number of questions
+    let questionCounter = 0;
+    const maxQuestions = 5;
 
     function createQuestion(questionData) {
-        let newDiv = document.createElement("div");
+        if (questionCounter < maxQuestions) {
+            let newDiv = document.createElement("div");
 
-        let questionInput = document.createElement("input");
-        questionInput.type = "text";
-        questionInput.value = questionData.text;
-        questionInput.classList.add("form-control", "my-3");
-        questionInput.style.fontWeight = "bold";
-        questionInput.name = "questions[]";
+            let questionInput = document.createElement("input");
+            questionInput.type = "text";
+            questionInput.placeholder = "Your question";
+            questionInput.classList.add("form-control", "my-3");
+            questionInput.style.fontWeight = "bold";
+            questionInput.name = "questions[]";
+            questionInput.value = questionData.text;
 
-        newDiv.appendChild(questionInput);
+            newDiv.appendChild(questionInput);
 
-        questionCounter++;
+            questionCounter++;
 
-        let questionHeading = document.createElement("h3");
-        questionHeading.textContent = "Question " + questionCounter;
-        questionHeading.classList.add('mt-5');
+            let questionHeading = document.createElement("h3");
+            questionHeading.textContent = "Question " + questionCounter;
+            questionHeading.classList.add('mt-5');
 
-        for (let i = 0; i < questionData.answers.length; i++) {
-            let answerData = questionData.answers[i];
-            let answerDiv = document.createElement("div");
-            answerDiv.classList.add("answer-option");
+            questionData.answers.forEach((answerData, i) => {
+                let answerDiv = document.createElement("div");
+                answerDiv.classList.add("answer-option");
 
-            let answerInput = document.createElement("input");
-            answerInput.type = "text";
-            answerInput.name = "answers[]";
-            answerInput.value = answerData.text;
-            answerInput.classList.add("form-control", "my-3");
+                let answerInput = document.createElement("input");
+                answerInput.type = "text";
+                answerInput.classList.add("form-control" , 'my-2');
+                answerInput.placeholder = "Answer " + (i + 1);
+                answerInput.name = `answers[${questionCounter - 1}][${i}][text]`;
+                answerInput.value = answerData.text;
 
-            let correctCheckbox = document.createElement("input");
-            correctCheckbox.type = "checkbox";
-            correctCheckbox.name = "is_correct[]";
-            correctCheckbox.checked = answerData.is_correct;
+                let correctAnswerCheckbox = document.createElement("input");
+                correctAnswerCheckbox.type = "checkbox";
+                correctAnswerCheckbox.name = `answers[${questionCounter - 1}][${i}][is_correct]`;
+                correctAnswerCheckbox.value = "1";
+                correctAnswerCheckbox.checked = answerData.is_correct;
 
-            answerDiv.appendChild(answerInput);
-            answerDiv.appendChild(correctCheckbox);
-            newDiv.appendChild(answerDiv);
+                answerDiv.appendChild(answerInput);
+                answerDiv.appendChild(correctAnswerCheckbox);
+
+                newDiv.appendChild(answerDiv);
+            });
+
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete Question";
+            deleteBtn.type = "button";
+            deleteBtn.classList.add("btn", "btn-danger");
+            deleteBtn.addEventListener("click", function() {
+                container.removeChild(questionHeading);
+                container.removeChild(newDiv);
+                container.removeChild(deleteBtn);
+                questionCounter--;
+                btn.disabled = false;
+            });
+
+            container.appendChild(questionHeading);
+            container.appendChild(newDiv);
+            container.appendChild(deleteBtn);
+
+            if (questionCounter === maxQuestions) {
+                let maxReachedText = document.createElement("p");
+                maxReachedText.textContent = "Maximum number of questions reached.";
+                maxReachedText.classList.add("alert", "alert-warning");
+                maxReachedText.setAttribute("role", "alert");
+                container.appendChild(maxReachedText);
+                btn.disabled = true;
+            }
         }
-
-        container.appendChild(questionHeading);
-        container.appendChild(newDiv);
     }
 
-    window.onload = function() {
-        fetch('/quizzle/latest')
-            .then(response => response.json())
-            .then(data => {
-                data.questions.forEach(createQuestion);
-            });
-    };
-
-    btn.addEventListener('click', function() {
-        if (questionCounter >= maxQuestions) {
-            alert("You cannot add more questions!");
-            return;
-        }
-        createQuestion({ text: "", answers: [{ text: "", is_correct: false }] });
+    btn.addEventListener("click", function() {
+        createQuestion({
+            text: "",
+            answers: Array(4).fill({
+                text: "",
+                is_correct: false,
+            }),
+        });
     });
+
+    generateAiQuizBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    // Store original form submission handler
+    let originalOnsubmit = quizzleForm.onsubmit;
+
+    // Temporarily disable form submission
+    quizzleForm.onsubmit = function(e) { e.preventDefault(); };
+
+    // Step 1: Generate the AI Quiz
+    fetch('/quizzle/start', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-Token': '{{ csrf_token() }}'
+        },
+        body: new URLSearchParams(new FormData(aiQuizForm))
+    })
+    .then(() => {
+        // Step 2: Fetch the latest AI Quiz
+        return fetch('/quizzle/latest')
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Step 3: Fill the quiz form
+        data.questions.forEach(createQuestion);
+
+        // Re-enable form submission by restoring the original handler
+        quizzleForm.onsubmit = originalOnsubmit;
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
+
 </script>
+
 @endsection
+

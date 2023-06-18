@@ -79,6 +79,9 @@ Route::post('/quizzle/start', [QuizzleController::class, 'generateAiQuiz'])->nam
 Route::get('/quizzle/latest', [QuizzleController::class, 'getLatestQuiz']);
 Route::post('/quizzle/start', [QuizzleController::class, 'generateAiQuiz']);
 
+Route::get('/quizzes/ai/{quizId}', [QuizzleController::class, 'getAiQuiz']);
+
+
 
 
 
