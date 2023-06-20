@@ -1,7 +1,7 @@
-<h1>{{$quiz->name}} - Results</h1>
-<p>Your score: {{$score}}</p>
+<h1>{{ $quiz->name }} - Results</h1>
+<p>Your score: {{ $score }}</p>
 
-<form method="POST" action="{{route('quizzle.rateQuiz', ['quiz' => $quiz->id])}}">
+<form method="POST" action="{{ route('quizzle.rateQuiz', ['quiz' => $quiz->id]) }}">
     @csrf
     <label for="rating">Rate this quiz:</label>
     <select name="rating" id="rating">
