@@ -233,3 +233,14 @@ form button:hover {
 .subtitle {
     text-decoration: underline;
 }
+
+.guest {
+    background-color: white;
+    text-align: center;
+    padding: 0.6rem 0rem 0.6rem 0rem;
+    color: black;
+}
+
+.guest a {
+    color: black;
+}

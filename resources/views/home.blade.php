@@ -1,6 +1,15 @@
 @extends('masters')
 @section('content')
     <div class="container-fluid">
+        <div class="row row-guest">
+            <div class="col">
+                {{-- Display if not logged in --}}
+        @guest
+        <div class="guest"> <a href="{{route('login')}}">Please log in to enjoy all the functionalities!</a> </div>
+        @endguest
+            </div>
+        </div>
+
         @include('homepage')
             {{-- Cards --}}
                     {{-- Most played Quizzles --}}
