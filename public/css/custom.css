@@ -226,6 +226,10 @@ form button:hover {
 }
 
 .ai-quiz-container {
-    background-color: #f8f9fa;
+    background-image: url("/images/5327613.jpg");
     height: 93vh;
+}
+
+#quiz-form {
+    background-color: rgba(255, 255, 255, 0.9) !important;
 }

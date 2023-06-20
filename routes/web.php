@@ -94,12 +94,12 @@ Route::get('/quizzes/ai/{quizId}', [QuizzleController::class, 'getAiQuiz']);
 Route::get('/geography', [GeographyController::class, 'index'])->name('geography');
 Route::get('/geography/{id}', [GeographyController::class, 'play']);
 
-Route::get('/music', function() {
+Route::get('/music', function () {
     $quizzes = Quiz::where('category_id', 2)->get();
     return view('categories/music', compact('quizzes'));
 })->name('music');
 
-Route::get('/math', function() {
+Route::get('/math', function () {
     $quizzes = Quiz::where('category_id', 3)->get();
 
     return view('categories/math', compact('quizzes'));
