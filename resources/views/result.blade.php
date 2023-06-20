@@ -9,7 +9,7 @@
                 </p>
 
                 <a href="/quiz/start" class="btn btn-dark">Start New Quiz</a>
-                <br>
+                <hr>
                 <a href="http://localhost:8000/" class="btn btn-dark">Back to Dashboard</a>
             </div>
         </div>

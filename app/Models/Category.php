@@ -10,7 +10,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function quiz(){
-        return $this->belongsTo(Quiz::class);
+    public function quizzes(){
+        return $this->hasMany(Quiz::class);
     }
 }

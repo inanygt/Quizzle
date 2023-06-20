@@ -46,6 +46,9 @@ Route::get('/discover', [CategoryController::class, 'index'])->name('discover');
 Route::get('/random', [QuizzleController::class, 'random'])->name("random");
 Route::post('/random', [QuizzleController::class], 'postRandom');
 
+Route::get('/random', [QuizzleController::class, 'random'])->name('random');
+
+
 // jorianAPI
 
 Route::get('/quiz/start', function () {

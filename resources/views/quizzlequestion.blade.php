@@ -36,16 +36,17 @@
     </script>
 </head>
 
-<body>
-    <div class="container">
-        <h1>{{ $quiz->name }}</h1>
-        <div id="timer"></div>
-        <p>Question {{ Session::get('question_number') }}</p>
+<body id="quizzlebackground">
+    <div class="vertical-center ai-quiz-container">
 
-        <p>{{ $nextQuestion->question }}</p>
 
         <form id="quiz-form" method="post" action="{{ route('quizzle.processAnswer') }}">
             @csrf
+            <h1>{{ $quiz->name }}</h1>
+
+        <p>Question {{ Session::get('question_number') }}</p>
+
+        <h3>{{ $nextQuestion->question }}</h3>
             <input type="hidden" name="questionId" value="{{ $nextQuestion->id }}">
             <div class="answer">
                 @foreach ($nextQuestion->answers as $answer)
@@ -55,7 +56,7 @@
                         {{ $answer->text }}
                     </label>
                 @endforeach
-
+                <div id="timer"></div>
             </div>
             <input type="radio" id="noAnswer" name="answerId" value="1" style="display:none">
         </form>
