@@ -1,14 +1,16 @@
 @extends('masters')
 @section('content')
-    <div class="container-fluid">
-        <div class="row row-guest">
-            <div class="col">
-                {{-- Display if not logged in --}}
-        @guest
-        <div class="guest"> <a href="{{route('login')}}">Please log in to enjoy all the functionalities!</a> </div>
-        @endguest
-            </div>
+
+    <div class="row">
+        <div class="col">
+            {{-- Display if not logged in --}}
+            @guest
+            <div class="guest"> <a href="{{route('login')}}">Please log in to enjoy all the functionalities!</a> </div>
+            @endguest
         </div>
+    </div>
+
+    <div class="container-fluid">
 
         @include('homepage')
             {{-- Cards --}}
@@ -140,4 +142,6 @@
                         @endforeach
                     </div>
     </div>
+    </div>
+
 @endsection
