@@ -26,7 +26,7 @@ class Quiz extends Model
                 ->get();
     }
 
-    // Best raded quizles
+    // Best rated quizles
 
     public function bestRadedQuizzes()
     {

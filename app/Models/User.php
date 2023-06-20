@@ -12,9 +12,7 @@ class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
+    /** The attributes that are mass assignable.
      * @var array<int, string>
      */
     protected $fillable = [
@@ -23,9 +21,7 @@ class User extends \TCG\Voyager\Models\User
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
+    /** The attributes that should be hidden for serialization.
      * @var array<int, string>
      */
     protected $hidden = [
@@ -33,10 +29,8 @@ class User extends \TCG\Voyager\Models\User
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
+    /** The attributes that should be cast.
+    * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',

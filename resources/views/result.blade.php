@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>Quiz Results</h1>
-        <h2>Your Score: {{ $score }}/{{ $quiz->num_questions }}</h2>
-        <p>Thanks for participating in the quiz! You scored {{ $score }} out of {{ $quiz->num_questions }}.</p>
+@extends('quizmaster')
+@section('content')
+    <div class="vertical-center ai-quiz-container">
+        <div class="row">
+            <div class="col d-flex flex-column align-items-center text-center">
+            {{-- <h1>Quiz Results</h1> --}}
+            <h2>Your Score: {{ $score }}/{{ $quiz->num_questions }}</h2>
+            <p>Thanks for participating in the quiz! You scored {{ $score }} out of {{ $quiz->num_questions }}.</p>
 
-        <a href="/quiz/start" class="btn">Start New Quiz</a>
+            <a href="/quiz/start" class="btn btn-dark">Start New Quiz</a>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+@endsection
