@@ -17,29 +17,29 @@ class OpenAIService
     }
 
     public function generateQuestion($subject, int $num_questions)
-{
-    $prompt = "Create a " . $num_questions . "-question multiple choice quiz about " . $subject . ". Each question should start with a '+', followed by 4 answers where the correct answer starts with a '*'. ALWAYS LIKE THIS!!:\n+Example Question 1\n-Answer 1\n-Answer 2\n*Correct Answer 3\n-Answer 4";
+    {
+        $prompt = "Create a " . $num_questions . "-question multiple choice quiz about " . $subject . ". Each question should start with a '+', followed by 4 answers where the correct answer starts with a '*'. ALWAYS LIKE THIS!!:\n+Example Question 1\n-Answer 1\n-Answer 2\n*Correct Answer 3\n-Answer 4";
 
-    $response = $this->client->request('POST', 'https://api.openai.com/v1/engines/text-davinci-002/completions', [
-        'headers' => [
-            'Authorization' => 'Bearer ' . env('OPENAI_KEY'),
-            'Content-Type' => 'application/json'
-        ],
-        'json' => [
-            'prompt' => $prompt,
-            'max_tokens' => 1000
-        ]
-    ]);
+        $response = $this->client->request('POST', 'https://api.openai.com/v1/engines/text-davinci-002/completions', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . env('OPENAI_KEY'),
+                'Content-Type' => 'application/json'
+            ],
+            'json' => [
+                'prompt' => $prompt,
+                'max_tokens' => 1000
+            ]
+        ]);
 
-    $responseArray = json_decode($response->getBody(), true);
+        $responseArray = json_decode($response->getBody(), true);
 
-    // Log the response from the API
-    Log::info('OpenAI API Response', $responseArray);
+        // Log the response from the API
+        Log::info('OpenAI API Response', $responseArray);
 
-    $quizData = $this->parseResponse($responseArray);
+        $quizData = $this->parseResponse($responseArray);
 
-    return $quizData;
-}
+        return $quizData;
+    }
 
 
     public function parseResponse($responseArray)
@@ -65,7 +65,7 @@ class OpenAIService
                 // Start a new question
                 $question = substr(trim($line), 1);
                 $answers = [];
-            } else if (substr(trim($line), 0, 1) == '-' || substr(trim($line), 0, 1) == '*') {
+            } elseif (substr(trim($line), 0, 1) == '-' || substr(trim($line), 0, 1) == '*') {
                 // If the line starts with '-', it's an incorrect answer, '*' indicates the correct answer
                 $isCorrect = (substr(trim($line), 0, 1) == '*') ? true : false;
                 $answerText = substr(trim($line), 1);

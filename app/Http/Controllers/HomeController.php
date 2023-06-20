@@ -9,7 +9,8 @@ use App\Models\Quiz;
 
 class HomeController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $quiz = new Quiz();
         $pQuizzes = $quiz->getMostPlayedQuizzes();
 
@@ -17,6 +18,6 @@ class HomeController extends Controller
         $rQuizzes = $quiz->bestRadedQuizzes();
 
 
-    return view('home', compact('pQuizzes', 'rQuizzes'));
+        return view('home', compact('pQuizzes', 'rQuizzes'));
     }
 }

@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 class GeographyController extends Controller
 {
     //
-    public function play($id) {
+    public function play($id)
+    {
 
         // get all questions with the quiz id from the url
         $quiz = Quiz::find($id);
@@ -26,10 +27,11 @@ class GeographyController extends Controller
         return view('categories.geographyquizzle', compact('id', 'questions', 'answers'));
     }
 
-    public function index() {
-    // Get all quizzes with category from relation
-    $quizzes = Quiz::where('category_id', 1)->get();
-    return view('categories/geography', compact('quizzes'));
+    public function index()
+    {
+        // Get all quizzes with category from relation
+        $quizzes = Quiz::where('category_id', 1)->get();
+        return view('categories/geography', compact('quizzes'));
     }
 
 
