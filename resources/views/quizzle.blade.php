@@ -75,7 +75,7 @@
     let btn = document.getElementById('add');
     let container = document.getElementById('container');
     let questionCounter = 0;
-    const maxQuestions = 5;
+    const maxQuestions = 10;
 
     function createQuestion(questionData) {
         if (questionCounter < maxQuestions) {
