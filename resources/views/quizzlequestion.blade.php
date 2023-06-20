@@ -44,9 +44,9 @@
             @csrf
             <h1>{{ $quiz->name }}</h1>
 
-        <p>Question {{ Session::get('question_number') }}</p>
+            <p>Question {{ Session::get('question_number') }}</p>
 
-        <h3>{{ $nextQuestion->question }}</h3>
+            <h3>{{ $nextQuestion->question }}</h3>
             <input type="hidden" name="questionId" value="{{ $nextQuestion->id }}">
             <div class="answer">
                 @foreach ($nextQuestion->answers as $answer)
