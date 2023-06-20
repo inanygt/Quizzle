@@ -32,6 +32,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/register', function() {
+    return view('auth.register');
+})->name('register');
+
 // Laravel breeze profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -104,6 +108,11 @@ Route::get('/math', function() {
 
     return view('categories/math', compact('quizzes'));
 })->name('math');
+
+Route::get('/trivia', function() {
+    $quizzes = Quiz::where('category_id', 4)->get();
+    return view('categories/trivia', compact('quizzes'));
+})->name('trivia');
 
 
 require __DIR__.'/auth.php';

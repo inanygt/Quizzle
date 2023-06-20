@@ -26,6 +26,9 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        {{-- No Account --}}
+        <a href="{{route('register')}}" class="subtitle">No account? Register here</a>
+
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
