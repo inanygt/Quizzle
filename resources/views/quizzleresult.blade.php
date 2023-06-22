@@ -3,8 +3,6 @@
     <div class="vertical-center ai-quiz-container">
         <div class="row">
             <div class="col d-flex flex-column align-items-center text-center">
-
-
                 <form method="POST" action="{{ route('quizzle.rateQuiz', ['quiz' => $quiz->id]) }}" id="quiz-form">
                     @csrf
                     <h1>{{ $quiz->name }} - Results</h1>
@@ -17,13 +15,17 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
-                    <button type="submit">Submit</button>
+                    <button type="submit" onclick="showAlert()">Submit</button>
                     <hr>
                     <a href="http://localhost:8000/" class="btn btn-dark">Back to Dashboard</a>
                 </form>
-
-
             </div>
         </div>
     </div>
+
+    <script>
+        function showAlert() {
+            alert('Thank you for rating this quiz!');
+        }
+    </script>
 @endsection

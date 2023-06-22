@@ -191,8 +191,10 @@ class QuizzleController extends Controller
         $quiz->rating = $validated['rating'];
         $quiz->save();
 
-        return back()->with('message', 'Thank you for rating this quiz!');
+        $score = Session::get('score', 0);
+        return view('quizzleresult', compact('quiz', 'score'))->with('message', 'Thank you for rating this quiz!');
     }
+
 
 
     public function generateAiQuiz(Request $request)
