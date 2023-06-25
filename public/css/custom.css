@@ -237,3 +237,8 @@ form button:hover {
 #quizzlebackground {
     background-image: url("/images/5327613.jpg");
 }
+
+.fa-arrow-up {
+    font-size: 3rem;
+    color: black;
+}
