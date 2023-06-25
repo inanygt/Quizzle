@@ -1,14 +1,17 @@
 @extends('masters')
 @section('content')
 
+
+
+
+    @guest
     <div class="row">
         <div class="col">
             {{-- Display if not logged in --}}
-            @guest
             <div class="guest"> <a href="{{route('login')}}">Please log in to enjoy all the functionalities!</a> </div>
-            @endguest
         </div>
     </div>
+    @endguest
 
     <div class="container-fluid">
 
